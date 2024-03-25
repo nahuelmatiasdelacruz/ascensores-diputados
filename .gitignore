@@ -1,4 +1,5 @@
-/src/client/node_modules
-/node_modules
-/src/client/build
+src/client/node_modules
+src/client/.env
+node_modules
 .env
+uploads

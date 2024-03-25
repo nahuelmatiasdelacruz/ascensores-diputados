@@ -4,7 +4,7 @@ const router = Router();
 
 router.get("/:id",huellasController.getHuellas);
 router.get("/sync/:id",huellasController.syncHuellas);
-router.post("/syncall/",huellasController.massiveSync);
+router.post("/syncall/",huellasController.syncAll);
 router.get("/huella/:id",huellasController.getHuellaById);
 router.post("/",huellasController.addHuella);
 router.put("/",huellasController.updateHuella);

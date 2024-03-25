@@ -12,8 +12,6 @@ const Main = () => {
     const userName = sessionStorage.getItem("userName");
     if(!token && !userName){
       navigate("/login");
-    }else{
-      console.log("Loged in as " + userName);
     }
   }
   useEffect(() => {

@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import { DataGrid, esES } from '@mui/x-data-grid';
+import MenuItem from '@mui/material/MenuItem';
 import Chip from '@mui/material/Chip';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 import Modal from "@mui/material/Modal";
+import * as XLSX from "xlsx";
+import { GridToolbarContainer,
+    GridToolbarExportContainer,
+    GridCsvExportMenuItem,
+    useGridApiContext,
+    gridFilteredSortedRowIdsSelector,
+    gridVisibleColumnFieldsSelector } from '@mui/x-data-grid';
 import axios from "axios";
 import { server } from "../../../../helpers/constants";
 import dayjs from "dayjs";
@@ -42,11 +50,71 @@ const Marcaciones = () => {
             //    params
             //});
             const result = await axios.get(`${server}/api/marcaciones`);
-            console.log(result.data);
             setMarcaciones(result.data);
         }catch(e){
             console.log(e.messsage);
         }
+
+    }
+    const downloadExcel = (marcaciones) => {
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.json_to_sheet(marcaciones);
+        XLSX.utils.book_append_sheet(workbook, worksheet, `Marcaciones`);
+        const nombreArchivo = `Marcaciones.xlsx`;
+        XLSX.writeFile(workbook, nombreArchivo);
+    }
+    const getExcel = (apiRef) => {
+        const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
+        const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef);
+        const data = filteredSortedRowIds.map((id) => {
+          const row = {};
+          visibleColumnsField.forEach((field) => {
+            row[field] = apiRef.current.getCellParams(id, field).value;
+          });
+          return row;
+        });
+        const parsedToDownload = data.map((marcacion)=>{
+            return {
+                DOCUMENTO: marcacion.documento,
+                APELLIDO: marcacion.apellido,
+                NOMBRE: marcacion.nombre,
+                TIPO: marcacion.tipo,
+                SECTOR: marcacion.sector,
+                FECHA: marcacion.fecha,
+                EQUIPO: marcacion.equipo
+            }
+        });
+        downloadExcel(parsedToDownload);
+    };
+    function ExcelExportMenuItem(props) {
+        const apiRef = useGridApiContext();
+        const { hideMenu } = props;
+        return (
+          <MenuItem
+            onClick={() => {
+              getExcel(apiRef);
+              hideMenu?.();
+            }}
+          >
+            Exportar EXCEL
+          </MenuItem>
+        );
+    }
+    const csvOptions = { delimiter: ';' };
+    function CustomExportButton(props) {
+      return (
+        <GridToolbarExportContainer {...props}>
+          <GridCsvExportMenuItem options={csvOptions} />
+          <ExcelExportMenuItem/>
+        </GridToolbarExportContainer>
+      );
+    }
+    function CustomToolbar(props) {
+      return (
+        <GridToolbarContainer {...props}>
+          <CustomExportButton />
+        </GridToolbarContainer>
+      );
     }
     useEffect(()=>{
         getMarcaciones();
@@ -65,6 +133,7 @@ const Marcaciones = () => {
             </div>
             {/* Vista principal */}
             <DataGrid
+                slots={{toolbar: CustomToolbar}}
                 disableRowSelectionOnClick={true}
                 autoPageSize
                 sx={{margin: "0", height: "80%"}}

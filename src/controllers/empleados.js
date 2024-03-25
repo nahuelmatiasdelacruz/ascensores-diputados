@@ -173,6 +173,7 @@ const addEmpleado = async (req, res) => {
   }
 };
 const updateEmpleado = async (req, res) => {
+  console.log(req.body);
   try{
     await knex.raw(`CALL sgp.sp_empleado_upd(
       :p_empleado_id,

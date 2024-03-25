@@ -1,4 +1,4 @@
-const knex = require('knex')({
+const knex2 = require('knex')({
   client: 'pg',
     connection: {
       host: "200.58.123.214",
@@ -8,7 +8,7 @@ const knex = require('knex')({
       port: 5432,
     }
 });
-const knex2 = require('knex')({
+const knex = require('knex')({
   client: 'pg',
     connection: {
       host: "127.0.0.1",

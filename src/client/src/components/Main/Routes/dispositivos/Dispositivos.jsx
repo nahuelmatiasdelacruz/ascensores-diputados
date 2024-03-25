@@ -19,6 +19,7 @@ import { stylesModal } from "../../../../styles/customStyles";
 
 const Dispositivos = () => {
     /* Modal controls */
+    const [modalSincronizar,setModalSincronizar] = useState(false);
     const [modalEditar,setModalEditar] = useState(false);
     const [modalBorrar,setModalBorrar] = useState(false);
     const [modalAdd,setModalAdd] = useState(false);
@@ -58,6 +59,18 @@ const Dispositivos = () => {
         })
         setModalEditar(true);
     }
+
+    const sincronizarDispositivo = async (e,data) => {
+        setSelected(data);
+        try
+        {
+            await axios.post(`${server}/api/dispositivos/syncDevice`,{id : data.equipo_id})
+        }catch(e)
+        {
+
+        }
+    }
+
     const editarDispositivoRow = (params) => {
         setSelected(params.row);
         setNuevoDispositivo({
@@ -190,6 +203,14 @@ const Dispositivos = () => {
     const handleCloseBorrar = () => {
         setModalBorrar(false);
     }
+
+    const handleSincronizar = () => {
+        setModalSincronizar(false);
+    }
+
+    const handleCloseSincronizar = () => {
+        setModalSincronizar(false);
+    }
     /* Configuración de la tabla */
     const gridColumns = [
         {field: "descripcion", headerName: "Descripción", width: 200},
@@ -205,6 +226,12 @@ const Dispositivos = () => {
         {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Acciones",sortable: false,width: 130,renderCell: (params)=>{
             return(
                 <Stack direction="row" spacing={1}>
+                    <IconButton onClick={(e)=>{
+                        e.stopPropagation();
+                        sincronizarDispositivo(e,params.row)}} color="error" aria-label="sync">
+                        <EditIcon/>
+                    </IconButton>
+
                     <IconButton onClick={(e)=>{
                         e.stopPropagation();
                         editarDispositivo(e,params.row)}} color="success" aria-label="edit">
@@ -277,6 +304,7 @@ const Dispositivos = () => {
                     </Stack>
                 </Box>
             </Modal>
+
             {/* Modal borrar Dispositivo */}
             <Modal open={modalBorrar} onClose={handleCloseBorrar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                 <Box sx={stylesModal}>

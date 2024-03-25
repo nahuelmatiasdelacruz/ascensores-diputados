@@ -57,6 +57,7 @@ const addGrupoEquipo = async (req,res)=>{
     try{
         const {equipo_id,grupo_id} = req.body;
         await knex.raw(`call sgp.sp_grupo_equipo_ins('${grupo_id}','${equipo_id}',1);`);
+        await knex("sgp.equipo_empleados").insert(parsed);
         res.status(200).json({msg: "ok"});
     }catch(e){
         console.log(e.message);
@@ -80,12 +81,16 @@ const deleteGroup = async (req,res)=>{
     }
 }
 const deleteGrupoEquipo = async(req,res)=>{
+    const equipo_id = req.params.id;
     try{
-        await knex.raw(`call sgp.sp_grupo_equipo_del(${req.params.id},1);`);
+        await knex.raw(`call sgp.sp_grupo_equipo_del(${equipo_id},1);`);
+        await knex("sgp.equipo_empleados").where("equipo_id",equipo_id).del();
+        console.log(borrados);
         res.status(200).json({msg: "Se ha borrado el equipo correctamente"});
     }catch(e){
         res.status(400).json({msg: "Hubo un error al borrar el equipo", error: e.message});
         console.log(e.message);
+
     }
 }
 const getGruposAsociados = async(req,res)=>{
@@ -199,24 +204,24 @@ const borrarGrupoAsociado = async (req,res) => {
             registro_activo: true
         });
         equiposAsociados.forEach((equipo)=>{
+            console.log("Equipo = " + equipo);
             obj.equipos.push({
                 id: `${equipo.equipo_id}`
             });
         });
         for(let equipos in equiposAsociados){
             await knex("sgp.equipo_empleados").where({
-                equipo_id: equiposAsociados[equipos].equipo_id,
+                equipo_id: equiposAsociados[parseInt(equipos)].equipo_id,
                 empleado_id: gruposAsociados[0].empleado_id
             }).del();
         }
         await knex.raw(`call sgp.sp_grupo_empleado_del(${req.params.id},1);`);
-        console.log(obj);
         await axios.post("http://127.0.0.1:9099",obj,{
             headers: {
                 "x-action":"QuitarUsuario"
             }
         });
-        res.status(200).json({msg: "Se borro correctamente el grupo asociado"});
+        res.status(200).json({msg: "ok"});
     }catch(e){
         console.log(e.message);
         res.status(500).json({msg: "Hubo un error al borrar el grupo asociado"});

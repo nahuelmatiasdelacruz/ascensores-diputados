@@ -21,16 +21,16 @@ import { stylesModal } from "../../../../styles/customStyles";
 
 const Grupos = () => {
     // Estados del componente
+    const [inputValue,setInputValue] = useState("");
+    const [devices,setDevices] = useState([]);
     const [modalAgregarGrupo,setModalAgregarGrupo] = useState(false);
     const [modalBorrarGrupo,setModalBorrarGrupo] = useState(false);
-    const [inputValue,setInputValue] = useState("");
     const [modalEditarGrupo,setModalEditarGrupo] = useState(false);
     const [loading,setLoading] = useState(false);
     const [selectedGroup,setSelectedGroup] = useState({});
     const [loadingGroupData,setLoadingGroupData] = useState(false);
     const [grupos,setGrupos] = useState([]);
     const [nombreNuevo,setNombreNuevo] = useState("");
-    const [devices,setDevices] = useState([]);
     const [deviceListForGroup,setDeviceListForGroup] = useState([]);
     const [currentGroupDevices,setCurrentGroupDevices] = useState([]);
     const [modalEditarNombre,setModalEditarNombre] = useState(false); 

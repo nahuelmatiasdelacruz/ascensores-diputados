@@ -12,4 +12,3 @@ export const stylesModal = {
     boxShadow: 24,
     p: 4,
 };
-

@@ -50,7 +50,6 @@ const getMarcacionesById = async (req,res) => {
             }
         })
         const arrayParsed = Object.values(parsed);
-        console.log(arrayParsed);
         res.json(arrayParsed);
     }catch(e){
         console.log(e.message);
@@ -62,7 +61,6 @@ const getMarcacionesDia = async (req,res) => {
     const parsedDia = dayjs(dia).format("YYYY-MM-DD");
     try{
         const marcaciones = await knex.select("*").from("sgp.vw_eventos").where({empleado_id}).andWhereBetween("fecha",[`${parsedDia} 00:00:00`,`${parsedDia} 23:59:59`]);
-        console.log(marcaciones);
         const parsedMarcaciones = marcaciones.map((marcacion)=>{
             
             return {

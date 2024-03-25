@@ -348,7 +348,7 @@ const Empleados = () => {
         }else{
             getEmpleadosFiltrados(filtro);
         }
-    },[filtroGeneral])
+    },[filtroGeneral]);
     return(
         <>
             <Toaster/>

@@ -184,7 +184,12 @@ const AccesosTab = ({userData}) => {
     const getData = async () => {
         setLoading(true);
         await getGruposAsociados();
-        await getEquiposAsociados();
+        try{
+            await getEquiposAsociados();
+        }catch(e)
+        {
+            console.log(e.message);
+        }
         setLoading(false);
     }
     useEffect(()=>{

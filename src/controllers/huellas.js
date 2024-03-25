@@ -5,19 +5,14 @@ const { syncDevices } = require("./controllerHelpers");
 const getHuellas = async (req,res)=>{
     const {id} = req.params;
     try{
-        const data = await knex.select("*").from("sgp.huellas").where({
-            empleado_id: id,
-            registro_activo: true
-        });
-        const parsed = data.map((huella)=>{
-            return {
-                ...huella,
-                descripcion: `Huella dactilar: ${huella.huella_id}`,
-                id: huella.huella_id
-            }
-        })
-        res.status(200).json(parsed);
+        const data = await knex.raw(`SELECT h.huella_id AS id, d.descripcion AS descripcion
+        FROM sgp.huellas AS h
+        JOIN sgp.dedos AS d ON h.dedo_id = d.dedo_id
+        WHERE h.empleado_id = ${id} AND h.registro_activo = true;
+        `)
+        res.status(200).json(data.rows);
     }catch(e){
+        console.log(e);
         res.status(400).json({msg: "Error al buscar las huellas",error: e.message});
     }
 }
@@ -42,33 +37,6 @@ const syncAll = async (req,res) => {
         return res.status(500).json({msg: "Hubo un error al sincronizar", error: e.message});
     }
 }
-const massiveSync = async (req,res) => {
-    try{
-        const data = await knex.select("*").from("sgp.vw_empleados").where({registro_activo: true});
-        const parsed = data.map((emp)=>{
-            return {
-                id: `${emp.empleado_id}`
-            }
-        });
-        const rows = {
-            rows: parsed
-        }
-        const response = await axios.post("http://127.0.0.1:9099",rows,{
-            headers: {
-                "x-action":"AgregarUsuariosMasivos"
-            }
-        });
-        if(response.data.Response === "OK"){
-            return res.status(200).json({msg: "ok"});
-        }else{
-            console.log(response.data);
-            return res.status(500).json({msg: "Hubo un error al sincronizar todo"});
-        }
-    }catch(e){
-        console.log(e);
-        return res.status(500).json({msg: "Hubo un error al sincronizar todo"});
-    }
-}
 const getHuellaById = async (req,res)=>{
 
 }
@@ -90,17 +58,14 @@ const checkIfUserHasDevice = async (equipo_id,user_id) => {
     }
 }
 const addHuella = async (req,res)=>{
-    const {equipo_id, user_id, descripcion} = req.body;
-    console.log(`1- Datos que envío desde el front: \nEquipo ID: ${equipo_id}\nUser ID: ${user_id}\nDedo: ${descripcion}`);
+    const {equipo_id, user_id, dedo_id} = req.body;
     const dispositivo = await knex.select("*").from("sgp.vw_equipos").where({
         equipo_estado: "ACTIVO",
         equipo_id
     });
     const {equipo_tipo_id} = dispositivo[0];
     try{
-        // Agregar el usuario al equipo
         const isIncludedInDevice = await checkIfUserHasDevice(equipo_id,user_id);
-        console.log(`2- Comprobando si el usuario ya existe en el equipo. \nResultado: ${isIncludedInDevice}`);
         if(equipo_tipo_id !== 4 && !isIncludedInDevice){
             const response = await axios.post("http://127.0.0.1:9099",{
             id: `${user_id}`,
@@ -112,17 +77,14 @@ const addHuella = async (req,res)=>{
                 }
             })
             if(response.data.Response === "ERROR"){
-                console.log(`3- ERROR: Hubo un error en el procedimiento: AgregarUsuario`);
                 return res.status(500).json({msg: response.Message});
             }
-            console.log(`3- Proceso AgregarUsuario COMPLETADO`);
         }
-        // Enrolar el usuario una vez agregado al equipo
         const responseEnrolar = await axios.post("http://127.0.0.1:9099",
         {
             id: `${equipo_id}`,
             id_usuario: user_id,
-            descripcion
+            dedo_id
         },
         {
             headers:{
@@ -130,13 +92,10 @@ const addHuella = async (req,res)=>{
             }
         });
         if(responseEnrolar.data.Response === "ERROR"){
-            console.log(`4- ERROR: Hubo un error en el procedimiento: EnrolarHuellaEquipo`);
-            console.log(responseEnrolar.data);
+
             return res.status(500).json({msg: "Error en el servicio a la hora de enrolar"});
         }
-        console.log(`4- Proceso EnrolarHuellaEquipo COMPLETADO`);
 
-        // Borrar el usuario ya que no va a utilizarse
         if(equipo_tipo_id !== 4 && !isIncludedInDevice){
             const responseBorrar = await axios.post("http://127.0.0.1:9099",
             {
@@ -150,10 +109,8 @@ const addHuella = async (req,res)=>{
             }
             );
             if(responseBorrar.data.Response === "ERROR"){
-                console.log(`5- ERROR En el proceso: QuitarUsuario`);
                 return res.status(500).json({msg: "Hubo un error en el proceso de enrolamiento: BORRADO DEL USUARIO LUEGO DE REGISTRAR LA HUELLA", error: responseBorrar.data.Response});
             }
-            console.log(`5- Proceso QuitarUsuario COMPLETADO`);
         }
         await syncDevices(user_id);
         return res.status(200).json({msg: "OK"});
@@ -161,7 +118,6 @@ const addHuella = async (req,res)=>{
         console.log(e.message);
         return res.status(500).json({msg: "Hubo un error al borar la huella del equipo luego de enrolar", error: e.message});
     }
-
 }
 const updateHuella = async (req,res)=>{
 
@@ -173,7 +129,6 @@ const deleteHuella = async (req,res)=>{
             huella_id
         });
         await syncDevices(user[0].empleado_id);
-        console.log("Sincronizacion de dispositivos luego de borrar huella COMPLETADO");
         await knex.raw(`call sgp.sp_huella_del(${huella_id},1)`);
         res.status(200).json({msg: "Se ha borrado con éxito la huella"});
     }catch(e){
@@ -186,7 +141,6 @@ const huellasController = {
     syncAll,
     getHuellas,
     getHuellaById,
-    massiveSync,
     addHuella,
     updateHuella,
     deleteHuella,

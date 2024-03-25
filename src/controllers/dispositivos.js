@@ -33,8 +33,10 @@ const getTarjetas = async (req,res) => {
         res.status(400).json({msg: "Hubo un error en la lectura de la base de datos", error: e.message});
     }
 }
-const deleteDispositivo = async (req, res)=>{
+const deleteDispositivo = async (req, res)=>
+{
     try{
+        let e = res;
         const { id, empleado_id } = req.params;
         await knex.raw(`call sgp.sp_equipo_del(${id}, 1);`);
         res.status(200).json({msg: "ok"});
@@ -47,6 +49,24 @@ const addDispositivo = async (req, res)=>{
     const result = await knex.raw(`call sgp.sp_equipo_ins(19, '${data.nombre}', '${data.ip}', '${data.puerto}', '${data.usuario}', '${data.password}', ${data.tipo}, 1, '${data.marca}', '${data.modelo}','${data.nro_serie}',1,null);`);
     res.status(200).json({msg: "ok", result});
 }
+
+const sincronizarDispositivo = async (req, res)=>{
+    const dataId = req.body;
+    const result = await knex.raw(`select e.empleado_id from sgp.empleados e
+    where empleado_id  in (select empleado_id from sgp.equipo_empleados ee where ee.equipo_id = 35 and ee.registro_activo = true);`);
+    let obj = {
+        equipo: `${dataId.id}`,
+        rows: []
+    }
+    result.rows.map((equipo)=>{
+        obj.rows.push(`${equipo.empleado_id}`);
+    })
+    const estado = await axios.post(`http://${process.env.SERVICE_HOST}:${process.env.SERVICE_PORT}/`,obj,{
+        headers: { "x-action": "AltaPorEQUIPO"}
+    });
+    res.status(200).json({msg: "ok", result});
+}
+
 const getEstadoDispositivo = async (req,res)=>{
     const estado = await axios.post(`http://${process.env.SERVICE_HOST}:${process.env.SERVICE_PORT}/`,{id: req.body.id},{
         headers: { "x-action": "EquipoEstaConectado"}
@@ -73,33 +93,47 @@ const addTarjeta = async (req, res)=>{
 const getEquiposAsociados = async(req,res)=>{
     const {id} = req.params;
     try{
-        const equiposAsociados = await knex
-            .select("sgp.equipo_empleados.*", "sgp.vw_equipos.descripcion")
-            .from("sgp.equipo_empleados")
-            .join("sgp.vw_equipos", "sgp.equipo_empleados.equipo_id", "sgp.vw_equipos.equipo_id")
-            .where({
-              "sgp.equipo_empleados.registro_activo": true,
-              "sgp.equipo_empleados.empleado_id": id
-            });
-        const idsAsociados = equiposAsociados.map((equipo)=>equipo.equipo_id);
-        const equiposDisponibles = await knex.select("*").from("sgp.vw_equipos")
-        .whereNotIn("equipo_id",idsAsociados)
-        .andWhere("equipo_estado","ACTIVO");
-        const parsedDisponibles = equiposDisponibles.map((ed)=>{
+        let asociados = [];
+        let disponibles = [];
+        const equiposAsociados = await knex.raw(`select distinct empleado_id, equipo_id
+        from (
+            select ee.empleado_id,  ee.equipo_id 
+            from sgp.equipo_empleados ee
+            where ee.registro_activo = true
+            union all
+            select gru_emp.empleado_id, gru_equ.equipo_id 
+            from sgp.grupo_empleados gru_emp
+            join sgp.grupos gru on (gru_emp.grupo_id = gru.grupo_id and gru.registro_activo = true)
+            join sgp.grupo_equipos gru_equ on (gru_emp.grupo_id = gru_equ.grupo_id and gru_equ.registro_activo = true) 
+            where gru_emp.registro_activo = true
+        )
+        where empleado_id = ${id};`);
+        // Equipos disponibles para asociar
+        const result_disponibles = await knex.raw(`
+          SELECT e.equipo_id as id, descripcion
+          FROM sgp.equipos e
+          LEFT JOIN sgp.equipo_empleados ee ON e.equipo_id = ee.equipo_id AND ee.empleado_id = :id
+          WHERE e.registro_activo = true
+          AND ee.empleado_id IS NULL
+        `, { id }) 
+        disponibles = result_disponibles.rows.map((equipo)=>{
             return {
-                label: ed.descripcion,
-                id: ed.equipo_id
+                label: equipo.descripcion,
+                id: equipo.id
             }
-        })
-        const parsed = equiposAsociados.map((equipo)=>{
+        });
+        asociados = equiposAsociados.rows.map((equipo)=>{
             return {
                 ...equipo,
-                id: equipo.equipo_empleado_id
+                id: equipo.equipo_id
             }
         })
+        console.log("ASOCIADOS: ")
+        console.log(asociados);
+        console.log("DISPONIBLES: ");
+        console.log(disponibles);
         res.json({
-            asociados: parsed,
-            disponibles: parsedDisponibles
+            asociados, disponibles
         });
     }catch(e){
         console.log(e.message);
@@ -124,10 +158,10 @@ const asociarEquipo = async (req, res) => {
     }
 }
 const borrarEquipoAsociado = async (req, res) => {
-    const {empleado_id, equipo_asociado_id, equipo_id} = req.params;
+    const {equipo_asociado_id, empleado_id, equipo_id} = req.params;
     try{
         await knex.raw(`call sgp.sp_equipo_empleado_del(
-            :equipo_empleado_id,
+            `+equipo_asociado_id+`,
             1
         );`,{
             equipo_empleado_id: equipo_asociado_id,
@@ -144,7 +178,6 @@ const borrarEquipoAsociado = async (req, res) => {
             }
         );
         if(responseBorrar.data.Response === "ERROR"){
-                console.log(responseBorrar.data.Response);
                 return res.status(500).json({msg: `Hubo un error en el servicio de equipos: ${responseBorrar.data.Response}`});
         }
         res.status(200).json({msg: "ok"});
@@ -163,6 +196,7 @@ const dispositivosController = {
     getDispositivos,
     deleteDispositivo,
     addDispositivo,
+    sincronizarDispositivo,
     getEstadoDispositivo,
     updateDispositivo
 }

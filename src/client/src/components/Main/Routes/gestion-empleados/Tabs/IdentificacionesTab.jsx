@@ -80,16 +80,16 @@ const IdentificacionesTab = ({userData}) => {
         },
     }));
     const dedos = [
-        {id: 1, label: "MD Puglar"},
-        {id: 2, label: "MD Indice"},
-        {id: 3, label: "MD Corazon"},
-        {id: 4, label: "MD Anular"},
-        {id: 5, label: "MD Menique"},
-        {id: 6, label: "MI Puglar"},
-        {id: 7, label: "MI Indice"},
-        {id: 8, label: "MI Corazon"},
-        {id: 9, label: "MI Anular"},
-        {id: 10, label: "MI Menique"},
+        {id: 1, label: "IZQUIERDA - MEÑIQUE"},
+        {id: 2, label: "IZQUIERDA - ANULAR"},
+        {id: 3, label: "IZQUIERDA - MEDIO"},
+        {id: 4, label: "IZQUIERDA - INDICE"},
+        {id: 5, label: "IZQUIERDA - PULGAR"},
+        {id: 6, label: "DERECHA - PULGAR"},
+        {id: 7, label: "DERECHA - INDICE"},
+        {id: 8, label: "DERECHA - MEDIO"},
+        {id: 9, label: "DERECHA - ANULAR"},
+        {id: 10, label: "DERECHA - MEÑIQUE"},
     ]
     const [loading,setLoading] = useState(false);
     const [openModalAdd,setOpenModalAdd] = useState(false);
@@ -212,7 +212,7 @@ const IdentificacionesTab = ({userData}) => {
                 const response = await axios.post(`${server}/api/huellas`,{
                     user_id: userData.empleado_id,
                     equipo_id: selectedRoller,
-                    descripcion: selectedDedo
+                    dedo_id: selectedDedo
                 });
                 toast.success("Se ha enrolado la huella correctamente!");
                 await getHuellas(userData.empleado_id);
@@ -286,7 +286,7 @@ const IdentificacionesTab = ({userData}) => {
     const confirmarBorradoHuella = async () => {
         setLoading(true);
         try{
-            await axios.delete(`${server}/api/huellas/${selectedRow.huella_id}`);
+            await axios.delete(`${server}/api/huellas/${selectedRow.id}`);
             await getHuellas(userData.empleado_id);
             toast.success("Se ha borrado con éxito la huella seleccionada");
             handleCloseBorrar();
@@ -354,9 +354,9 @@ const IdentificacionesTab = ({userData}) => {
                         dispositivos.map((dispositivo)=><MenuItem key={dispositivo.equipo_id} value={dispositivo.equipo_id}>{dispositivo.descripcion}</MenuItem>)
                     }
                     </TextField>
-                    <TextField defaultValue={dedos[1].label} onChange={handleChangeDedo} sx={{width: "60%",marginBottom: "20px"}} id="select-dedo" select label="Dedo">
+                    <TextField defaultValue={dedos[1].id} onChange={handleChangeDedo} sx={{width: "60%",marginBottom: "20px"}} id="select-dedo" select label="Dedo">
                     {
-                        dedos.map((dedo)=><MenuItem key={dedo.id} value={dedo.label}>{dedo.label}</MenuItem>)
+                        dedos.map((dedo)=><MenuItem key={dedo.id} value={dedo.id}>{dedo.label}</MenuItem>)
                     }
                     </TextField>
                     <LoadingButton color="primary" onClick={startScan} loading={scanningFinger} loadingPosition="center" variant="outlined">
