@@ -5,7 +5,7 @@ import { Outlet} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import SideMenu from './SideMenu/SideMenu';
 
-const Main = () => {
+export const Main = () => {
   const navigate = useNavigate();
   const checkLogin = () => {
     const token = sessionStorage.getItem('x-token');
@@ -28,5 +28,3 @@ const Main = () => {
     </LocalizationProvider>
   );
 };
-
-export default Main;

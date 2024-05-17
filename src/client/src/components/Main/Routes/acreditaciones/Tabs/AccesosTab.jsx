@@ -5,7 +5,7 @@ import { stylesModal } from '../../../../../styles/customStyles';
 import { Switch, Stack, EditIcon, IconButton, DeleteIcon, FormControlLabel, Modal, Box, Button, LoadingButton, TextField, MenuItem, DataGrid, esES, AddIcon } from '../../../../';
 import { styled } from '@mui/material/styles';
 
-const AccesosTab = () => {
+export const AccesosTab = () => {
     const IOSSwitch = styled((props) => (
         <Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />
       ))(({ theme }) => ({
@@ -234,6 +234,4 @@ const AccesosTab = () => {
             </div>
         </div>
     )
-}
-
-export default AccesosTab;
+};

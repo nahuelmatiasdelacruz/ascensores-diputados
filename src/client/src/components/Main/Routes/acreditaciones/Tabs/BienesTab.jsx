@@ -11,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { stylesModal } from '../../../../../styles/customStyles';
 
-const BienesTab = () => {
+export const BienesTab = () => {
     const [selected,setSelectedRow] = useState({});
     const [loading,setLoading] = useState(false);
     const [openBorrar,setOpenBorrar] = useState(false);
@@ -134,6 +134,4 @@ const BienesTab = () => {
             />
         </>
     )
-}
-
-export default BienesTab;
+};

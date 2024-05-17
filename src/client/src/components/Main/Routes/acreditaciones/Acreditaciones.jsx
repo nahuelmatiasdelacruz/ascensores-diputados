@@ -3,7 +3,7 @@ import {Box,DataGrid,esES,Modal,Stack,IconButton,Button,DeleteIcon,EditIcon,Badg
 import { stylesModal } from '../../../../styles/customStyles';
 import EditTabs from './EditTabs';
 
-const Acreditaciones = () => {
+export const Acreditaciones = () => {
     const [selected,setSelectedRow] = useState({});
     const [loading,setLoading] = useState(false);
     const [open,setOpen] = useState(false);
@@ -79,5 +79,4 @@ const Acreditaciones = () => {
             />
         </>
     )
-}
-export default Acreditaciones;
+};

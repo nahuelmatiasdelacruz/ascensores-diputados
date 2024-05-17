@@ -3,7 +3,7 @@ import {Toaster} from 'react-hot-toast';
 import {Box,MenuItem,Modal,AddIcon,PersonalVideoIcon,TextField,Stack,IconButton,Button,DeleteIcon,EditIcon,DataGrid,esES,} from '../../../';
 import { stylesModal } from '../../../../styles/customStyles';
 
-const TiposBien = () => {
+export const TiposBien = () => {
     const [loading,setLoading] = useState(false);
     const [selected,setSelected] = useState({});
     const [openBorrar,setOpenBorrar] = useState(false);
@@ -93,6 +93,4 @@ const TiposBien = () => {
             <Button sx={{marginTop: '20px'}} onClick={addTipoBien} variant='outlined' startIcon={<AddIcon/>}>Añadir grupo de bienes</Button>
         </>
     )
-}
-
-export default TiposBien;
+};

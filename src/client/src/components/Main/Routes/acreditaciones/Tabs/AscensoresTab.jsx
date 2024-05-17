@@ -15,7 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import toast, {Toaster} from 'react-hot-toast';
 import { stylesModal } from '../../../../../styles/customStyles';
 
-const AscensoresTab = () => {
+export const AscensoresTab = () => {
     const [selected,setSelectedRow] = useState({});
     const [openModalAdd,setOpenModalAdd] = useState(false);
     const [selectedRoller,setSelectedRoller] = useState('');
@@ -165,6 +165,4 @@ const AscensoresTab = () => {
             </Box>
         </>
     )
-}
-
-export default AscensoresTab;
+};

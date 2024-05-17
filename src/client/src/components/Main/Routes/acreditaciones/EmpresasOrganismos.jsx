@@ -3,7 +3,7 @@ import {Toaster} from 'react-hot-toast';
 import {DataGrid,esES,Box,BadgeRoundedIcon,Modal,AddIcon,TextField,Stack,IconButton,Button,DeleteIcon,EditIcon} from '../../../';
 import { stylesModal } from '../../../../styles/customStyles';
 
-const EmpresasOrganismos = () => {
+export const EmpresasOrganismos = () => {
     const [loading,setLoading] = useState(false);
     const [selected,setSelected] = useState({});
     const [openBorrar,setOpenBorrar] = useState(false);
@@ -86,6 +86,4 @@ const EmpresasOrganismos = () => {
             <Button sx={{marginTop: '20px'}} onClick={addEmpresa} variant='outlined' startIcon={<AddIcon/>}>Añadir empresa / Organismo</Button>
         </>
     )
-}
-
-export default EmpresasOrganismos;
+};

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {GroupsIcon,DataGrid,DeleteIcon,esES,Box,Modal,AddIcon,TextField,Stack,IconButton,Button,EditIcon} from '../../../';
+import {GroupsIcon,DataGrid,DeleteIcon,esES,Box,Modal,AddIcon,TextField,Stack,IconButton,Button,EditIcon} from '../../..';
 import {Toaster} from 'react-hot-toast';
 import { stylesModal } from '../../../../styles/customStyles';
 
-const TiposHabilitacion = () => {
+export const TiposHabilitacion = () => {
     const [loading,setLoading] = useState(false);
     const [selected,setSelected] = useState({});
     const [openBorrar,setOpenBorrar] = useState(false);
@@ -84,6 +84,4 @@ const TiposHabilitacion = () => {
             <Button sx={{marginTop: '20px'}} onClick={addTipo} variant='outlined' startIcon={<AddIcon/>}>Añadir tipo de habilitación</Button>
         </>
     )
-}
-
-export default TiposHabilitacion;
+};

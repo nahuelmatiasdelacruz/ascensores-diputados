@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';import { esES } from '@mui/x-data-grid/locales';
 
-const EventosTab = () => {
+export const EventosTab = () => {
     const [loading,setLoading] = useState(false);
     const [events,setEvents] = useState([]);
     const eventsColumns = [
@@ -22,6 +22,4 @@ const EventosTab = () => {
             />
         </>
     )
-}
-
-export default EventosTab;
+};

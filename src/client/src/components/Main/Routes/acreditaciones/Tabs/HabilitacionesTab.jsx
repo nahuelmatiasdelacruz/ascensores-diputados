@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import { stylesModal } from '../../../../../styles/customStyles';
 
-const HabilitacionesTab = () => {
+export const HabilitacionesTab = () => {
     const [openDelete,setOpenDelete] = useState(false);
     const [openAdd,setOpenAdd] = useState(false);
     const [selected,setSelected] = useState({});
@@ -160,6 +160,4 @@ const HabilitacionesTab = () => {
             <Button sx={{marginTop: '20px'}} onClick={addHabilitacion} variant='outlined' startIcon={<AddIcon/>}>Añadir habilitación</Button>
         </div>
     )
-}
-
-export default HabilitacionesTab;
+};

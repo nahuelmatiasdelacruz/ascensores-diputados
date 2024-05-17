@@ -5,18 +5,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import UserPhoto from '../../../../img/no-profile2.png';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import Stack from '@mui/material/Stack';
-import { useState } from 'react';
-import AcreditacionTab from './Tabs/AcreditacionTab';
-import HabilitacionesTab from './Tabs/HabilitacionesTab';
-import DocumentacionesTab from './Tabs/DocumentacionTab';
-import BienesTab from './Tabs/BienesTab';
-import AscensoresTab from './Tabs/AscensoresTab';
-import AccesosTab from './Tabs/AccesosTab';
-import EventosTab from './Tabs/EventosTab';
+import {AcreditacionTab,HabilitacionesTab,DocumentacionesTab,BienesTab,AscensoresTab,AccesosTab,EventosTab} from './Tabs';
 
 function TabPanel(props) {
   const { data, children, value, index, ...other } = props;

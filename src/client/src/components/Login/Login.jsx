@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../helpers/constants';
 
-const Login = ({setLoggedIn}) => {
+export const Login = ({setLoggedIn}) => {
     const navigate = useNavigate();
     const [user,setUser] = useState('');
     const [password,setPassword] = useState('');
@@ -62,6 +62,4 @@ const Login = ({setLoggedIn}) => {
             </div>
         </>
     )
-}
-
-export default Login;
+};

@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import { stylesModal } from '../../../../../styles/customStyles';
 
-const DocumentacionesTab = () => {
+export const DocumentacionesTab = () => {
     const [openDelete,setOpenDelete] = useState(false);
     const [loadingEdit,setLoadingEdit] = useState(false);
     const [openAdd,setOpenAdd] = useState(false);
@@ -154,6 +154,4 @@ const DocumentacionesTab = () => {
             <Button sx={{marginTop: '20px'}} onClick={addDocumentacion} variant='outlined' startIcon={<AddIcon/>}>Añadir documentación</Button>
         </>
     )
-}
-
-export default DocumentacionesTab;
+};

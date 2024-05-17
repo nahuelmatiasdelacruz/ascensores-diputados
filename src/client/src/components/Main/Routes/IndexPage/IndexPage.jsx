@@ -16,7 +16,7 @@ import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 
-const Index = () => {
+export const IndexPage = () => {
     const [tipoRegistros,setTipoRegistros] = useState('mensual');
     const handleChangeTipo = (e) => {
         setTipoRegistros(e.target.value)
@@ -232,10 +232,7 @@ const Index = () => {
                 </div>
             </div>
             <div className='real-time-register'>
-
             </div>
         </div>
     )
-}
-
-export default Index;
+};
