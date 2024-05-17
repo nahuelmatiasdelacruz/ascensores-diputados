@@ -1,47 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, esES } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';import { esES } from '@mui/x-data-grid/locales';
 import MenuItem from '@mui/material/MenuItem';
 import Chip from '@mui/material/Chip';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
-import Modal from "@mui/material/Modal";
-import * as XLSX from "xlsx";
+import Modal from '@mui/material/Modal';
+import * as XLSX from 'xlsx';
 import { GridToolbarContainer,
     GridToolbarExportContainer,
     GridCsvExportMenuItem,
     useGridApiContext,
     gridFilteredSortedRowIdsSelector,
     gridVisibleColumnFieldsSelector } from '@mui/x-data-grid';
-import axios from "axios";
-import { server } from "../../../../helpers/constants";
-import dayjs from "dayjs";
+import axios from 'axios';
+import { server } from '../../../../helpers/constants';
+import dayjs from 'dayjs';
 
 const Marcaciones = () => {
     const [loading,setLoading] = useState(false);
     const [marcaciones,setMarcaciones] = useState([]);
     const marcacionesColumns = [
-        {field: "documento", headerName: "DNI", width: "200"},
-        {field: "apellido", headerName: "Apellido", width: "150"},
-        {field: "nombre", headerName: "Nombre", width: "150"},
-        {field: "tipo", headerName: "Tipo", width: "250"},
-        {field: "sector", headerName: "Sector", width: "150"},
-        {field: "fecha", headerName: "Fecha de marcacion", width: "150"},
-        {field: "equipo", headerName: "Equipo", width: "150"},
-        // {field: "tipo_marcacion", headerName: "Tipo de marcación", width: "140", renderCell: (params)=>{
+        {field: 'documento', headerName: 'DNI', width: '200'},
+        {field: 'apellido', headerName: 'Apellido', width: '150'},
+        {field: 'nombre', headerName: 'Nombre', width: '150'},
+        {field: 'tipo', headerName: 'Tipo', width: '250'},
+        {field: 'sector', headerName: 'Sector', width: '150'},
+        {field: 'fecha', headerName: 'Fecha de marcacion', width: '150'},
+        {field: 'equipo', headerName: 'Equipo', width: '150'},
+        // {field: 'tipo_marcacion', headerName: 'Tipo de marcación', width: '140', renderCell: (params)=>{
         //     return(
         //         <>
         //             {
-        //                 params.row.tipo_marcacion === "ingreso" ? 
-        //                 <Chip color="primary" label="Ingreso"/>
+        //                 params.row.tipo_marcacion === 'ingreso' ? 
+        //                 <Chip color='primary' label='Ingreso'/>
         //                 :
-        //                 <Chip color="warning" label="Salida"/>
+        //                 <Chip color='warning' label='Salida'/>
         //             }
         //         </>
         //     )
         // }},
     ];
     const getMarcaciones = async () => {
-        //const fechaDesde = dayjs().format("DD-MM-YYYY");
+        //const fechaDesde = dayjs().format('DD-MM-YYYY');
         //const params = {
         //    fechaDesde
         //}
@@ -127,8 +127,8 @@ const Marcaciones = () => {
     },[]);
     return(
         <>
-            <div className="content-header">
-                <TouchAppIcon fontSize="large"/>
+            <div className='content-header'>
+                <TouchAppIcon fontSize='large'/>
                 <h3>Registro de marcaciones</h3>
             </div>
             {/* Vista principal */}
@@ -136,7 +136,7 @@ const Marcaciones = () => {
                 slots={{toolbar: CustomToolbar}}
                 disableRowSelectionOnClick={true}
                 autoPageSize
-                sx={{margin: "0", height: "80%"}}
+                sx={{margin: '0', height: '80%'}}
                 loading={loading}
                 rows={marcaciones}
                 columns={marcacionesColumns}

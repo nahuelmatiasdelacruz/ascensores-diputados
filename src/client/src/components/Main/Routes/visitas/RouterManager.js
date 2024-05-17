@@ -1,5 +1,5 @@
-import CargaVisitas from "./CargaVisitas";
-import RegistroVisitas from "./RegistroVisitas";
+import CargaVisitas from './CargaVisitas';
+import RegistroVisitas from './RegistroVisitas';
 
 const VisitasRoutes = {
     CargaVisitas,

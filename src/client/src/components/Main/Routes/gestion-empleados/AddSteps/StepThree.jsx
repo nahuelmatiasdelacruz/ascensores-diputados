@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import NoPhoto from "../../../../../img/nophoto.png";
+import React, { useState } from 'react';
+import NoPhoto from '../../../../../img/nophoto.png';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import Modal from "@mui/material/Modal";
+import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
-import Webcam from "react-webcam";
-import { stylesModal } from "../../../../../styles/customStyles";
+import Webcam from 'react-webcam';
+import { stylesModal } from '../../../../../styles/customStyles';
 
 const StepThree = ({datos,setDatos}) => {
     const [foto,setFoto] = useState(null);
@@ -43,7 +43,7 @@ const StepThree = ({datos,setDatos}) => {
       }
     const confirmarFotoCapturada = () => {
         if(imgSrc){
-          const base64 = imgSrc.split(",")[1];
+          const base64 = imgSrc.split(',')[1];
           setDatos({
             ...datos,
             profilePhoto: base64
@@ -57,15 +57,15 @@ const StepThree = ({datos,setDatos}) => {
         setWebCamModal(false);
     }
     return(
-        <Box sx={{width: "30%", display: "flex",flexDirection: "row", marginTop: 3, marginBottom: 3}}>
+        <Box sx={{width: '30%', display: 'flex',flexDirection: 'row', marginTop: 3, marginBottom: 3}}>
             <Modal open={webCamModal} onClose={handleCloseWebCamModal}>
-                <Box sx={{...stylesModal,width: "40%", height: "70%"}}>
+                <Box sx={{...stylesModal,width: '40%', height: '70%'}}>
                   {imgSrc ? 
                     <React.Fragment>
-                      <img src={imgSrc} alt="captured"/>
-                      <Stack sx={{marginTop: 4}} direction="row" spacing={1}>
-                        <Button onClick={()=>{setImgSrc(null)}} startIcon={<PhotoCamera/>} variant="outlined">Capturar nuevamente</Button>
-                        <Button onClick={confirmarFotoCapturada}  variant="outlined" color="success">Confirmar foto</Button>
+                      <img src={imgSrc} alt='captured'/>
+                      <Stack sx={{marginTop: 4}} direction='row' spacing={1}>
+                        <Button onClick={()=>{setImgSrc(null)}} startIcon={<PhotoCamera/>} variant='outlined'>Capturar nuevamente</Button>
+                        <Button onClick={confirmarFotoCapturada}  variant='outlined' color='success'>Confirmar foto</Button>
                       </Stack>
                     </React.Fragment>
                     :
@@ -75,22 +75,22 @@ const StepThree = ({datos,setDatos}) => {
                         screenshotFormat='image/png'
                         width={600}
                       />
-                      <Button onClick={capture} sx={{marginTop: 4}} startIcon={<PhotoCamera/>} variant="outlined">Capturar</Button>
+                      <Button onClick={capture} sx={{marginTop: 4}} startIcon={<PhotoCamera/>} variant='outlined'>Capturar</Button>
                     </React.Fragment>
                 }
                 </Box>
             </Modal>
-            <img className="foto-perfil" src={datos?.profilePhoto ? `data:image/png;base64,${datos.profilePhoto}` : NoPhoto} alt="No hay foto"/>
-            <div className="step-two-buttons">
-                <Tooltip title="Subir foto">
-                    <IconButton color="primary" aria-label="upload picture" component="label">
-                        <input hidden accept="image/*" type="file" onChange={handleFileSelect}/>
+            <img className='foto-perfil' src={datos?.profilePhoto ? `data:image/png;base64,${datos.profilePhoto}` : NoPhoto} alt='No hay foto'/>
+            <div className='step-two-buttons'>
+                <Tooltip title='Subir foto'>
+                    <IconButton color='primary' aria-label='upload picture' component='label'>
+                        <input hidden accept='image/*' type='file' onChange={handleFileSelect}/>
                         <FileUploadIcon/>
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Tomar foto">
+                <Tooltip title='Tomar foto'>
                     <IconButton onClick={startWebcamSync}>
-                        <PhotoCamera color="secondary"/>
+                        <PhotoCamera color='secondary'/>
                     </IconButton>
                 </Tooltip>
             </div>

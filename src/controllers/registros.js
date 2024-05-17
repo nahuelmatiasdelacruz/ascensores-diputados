@@ -1,4 +1,4 @@
-const { knex } = require("../helpers/knexConfig");
+const { knex } = require('../helpers/knexConfig');
 const Registro = {
     getRegistros: function (filtro) {
       return knex('sgp.vw_marcaciones').where(filtro);
@@ -7,11 +7,11 @@ const Registro = {
 
 const getAllRegistros = async (req,res) => {
     try{
-        const data = await knex.select("*").from("sgp.vw_marcaciones").where("registro_activo",true);
+        const data = await knex.select('*').from('sgp.vw_marcaciones').where('registro_activo',true);
         res.json(data);
     }catch(e){
         console.log(e.message);
-        res.status(500).json({msg: "Error al buscar los registros"});
+        res.status(500).json({msg: 'Error al buscar los registros'});
     }
 }
 
@@ -20,15 +20,15 @@ const getRegistros = async (req,res) => {
     const filtro = {};
     if(fechaDesde && fechaHasta){
         filtro.fecha = (builder) => {
-            builder.whereBetween("fecha",[fechaDesde, fechaHasta]);
+            builder.whereBetween('fecha',[fechaDesde, fechaHasta]);
         }
     }else if(fechaDesde){
         filtro.fecha = (builder) => {
-            builder.where("fecha",">=",fechaDesde);
+            builder.where('fecha','>=',fechaDesde);
         };
     }else if(fechaHasta){
         filtro.fecha = (builder) => {
-            builder.where("fecha","<=",fechaHasta);
+            builder.where('fecha','<=',fechaHasta);
         };
     }
     if(nombre){
@@ -54,7 +54,7 @@ const getRegistros = async (req,res) => {
         res.json(registros);
     }catch(e){
         console.log(e.message);
-        res.status(500).json({msg: "Hubo un error al filtrar los datos"});
+        res.status(500).json({msg: 'Hubo un error al filtrar los datos'});
     }
 }
 

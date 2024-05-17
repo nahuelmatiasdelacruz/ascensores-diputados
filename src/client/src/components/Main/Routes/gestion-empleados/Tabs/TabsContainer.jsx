@@ -1,38 +1,38 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Chip from "@mui/material/Chip";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import UserPhoto from "../../../../../img/nophoto.png";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import SyncIcon from "@mui/icons-material/Sync";
-import Modal from "@mui/material/Modal";
-import Stack from "@mui/material/Stack";
-import Webcam from "react-webcam";
-import { useState } from "react";
-import AccesosTab from "./AccesosTab";
-import EventosTab from "./EventosTab";
-import DetallesTab from "./DetallesTab";
-import IdentificacionesTab from "./IdentificacionesTab";
-import axios from "axios";
-import { server } from "../../../../../helpers/constants";
-import DocumentacionTab from "./DocumentacionTab";
-import HabilitacionesTab from "./HabilitacionesTab";
-import { stylesModal } from "../../../../../styles/customStyles";
-import { Toaster, toast } from "react-hot-toast";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Chip from '@mui/material/Chip';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import UserPhoto from '../../../../../img/nophoto.png';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import SyncIcon from '@mui/icons-material/Sync';
+import Modal from '@mui/material/Modal';
+import Stack from '@mui/material/Stack';
+import Webcam from 'react-webcam';
+import { useState } from 'react';
+import AccesosTab from './AccesosTab';
+import EventosTab from './EventosTab';
+import DetallesTab from './DetallesTab';
+import IdentificacionesTab from './IdentificacionesTab';
+import axios from 'axios';
+import { server } from '../../../../../helpers/constants';
+import DocumentacionTab from './DocumentacionTab';
+import HabilitacionesTab from './HabilitacionesTab';
+import { stylesModal } from '../../../../../styles/customStyles';
+import { Toaster, toast } from 'react-hot-toast';
 
 function TabPanel(props) {
     const { data, children, value, index, ...other } = props;
 
     return (
         <div
-            role="tabpanel"
+            role='tabpanel'
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
@@ -53,7 +53,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
-        "aria-controls": `simple-tabpanel-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
     };
 }
 
@@ -87,7 +87,7 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
     };
     const confirmarFotoCapturada = async () => {
         if (imgSrc) {
-            const base64 = imgSrc.split(",")[1];
+            const base64 = imgSrc.split(',')[1];
             setData({
                 ...data,
                 profilePhoto: base64,
@@ -99,11 +99,11 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
                 });
                 setImgSrc(null);
                 setWebCamModal(false);
-                toast.success("Se ha cambiado con éxito la foto");
+                toast.success('Se ha cambiado con éxito la foto');
             } catch (e) {
                 setImgSrc(null);
                 setWebCamModal(false);
-                toast.error("Hubo un error al cambiar la foto");
+                toast.error('Hubo un error al cambiar la foto');
             }
         }
     };
@@ -113,7 +113,7 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = async () => {
-                const fotoBase64 = reader.result.split(",")[1];
+                const fotoBase64 = reader.result.split(',')[1];
                 setData({
                     ...data,
                     profilePhoto: fotoBase64,
@@ -139,10 +139,10 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
                 `${server}/api/empleados/`,
                 userData
             );
-            toast.success("Se ha actualizado correctamente el empleado");
+            toast.success('Se ha actualizado correctamente el empleado');
         } catch (e) {
             console.log(e);
-            toast.error("Hubo un error al actualizar los datos del empleado");
+            toast.error('Hubo un error al actualizar los datos del empleado');
         }
     };
     const handleSync = async () => {
@@ -152,7 +152,7 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
                 `${server}/api/huellas/sync/${userData.empleado_id}`
             );
             setLoading(false);
-            toast.success("Sincronización de huellas en equipos COMPLETADA");
+            toast.success('Sincronización de huellas en equipos COMPLETADA');
         } catch (e) {
             setLoading(false);
             toast.error(
@@ -162,14 +162,14 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
     };
     const getColor = (estado) => {
         switch (estado) {
-            case "ACTIVO":
-                return "success";
-            case "INACTIVO":
-                return "error";
-            case "PRECARGA":
-                return "warning";
+            case 'ACTIVO':
+                return 'success';
+            case 'INACTIVO':
+                return 'error';
+            case 'PRECARGA':
+                return 'warning';
             default:
-                return "primary";
+                return 'primary';
         }
     };
     const updateUserData = async () => {
@@ -184,42 +184,42 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
             };
             setUserData(newData);
         } catch (e) {
-            toast.error("Hubo un error al refrescar los datos del empleado");
+            toast.error('Hubo un error al refrescar los datos del empleado');
         }
     };
     return (
         <Box
             sx={{
-                width: "90%",
-                backgroundColor: "white",
-                margin: "0 auto",
-                marginTop: "30px",
-                boxSizing: "border-box",
-                padding: "20px",
-                borderRadius: "6px",
+                width: '90%',
+                backgroundColor: 'white',
+                margin: '0 auto',
+                marginTop: '30px',
+                boxSizing: 'border-box',
+                padding: '20px',
+                borderRadius: '6px',
             }}>
             <Toaster />
             <Modal open={webCamModal} onClose={handleCloseWebCamModal}>
-                <Box sx={{ ...stylesModal, width: "40%", height: "70%" }}>
+                <Box sx={{ ...stylesModal, width: '40%', height: '70%' }}>
                     {imgSrc ? (
                         <React.Fragment>
-                            <img src={imgSrc} alt="captured" />
+                            <img src={imgSrc} alt='captured' />
                             <Stack
                                 sx={{ marginTop: 4 }}
-                                direction="row"
+                                direction='row'
                                 spacing={1}>
                                 <Button
                                     onClick={() => {
                                         setImgSrc(null);
                                     }}
                                     startIcon={<PhotoCamera />}
-                                    variant="outlined">
+                                    variant='outlined'>
                                     Capturar nuevamente
                                 </Button>
                                 <Button
                                     onClick={confirmarFotoCapturada}
-                                    variant="outlined"
-                                    color="success">
+                                    variant='outlined'
+                                    color='success'>
                                     Confirmar foto
                                 </Button>
                             </Stack>
@@ -228,59 +228,59 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
                         <React.Fragment>
                             <Webcam
                                 ref={webcamRef}
-                                screenshotFormat="image/png"
+                                screenshotFormat='image/png'
                                 width={600}
                             />
                             <Button
                                 onClick={capture}
                                 sx={{ marginTop: 4 }}
                                 startIcon={<PhotoCamera />}
-                                variant="outlined">
+                                variant='outlined'>
                                 Capturar
                             </Button>
                         </React.Fragment>
                     )}
                 </Box>
             </Modal>
-            <div className="profile-data-header">
-                <div className="profile-photo-data">
-                    <div className="profile-photo-container">
+            <div className='profile-data-header'>
+                <div className='profile-photo-data'>
+                    <div className='profile-photo-container'>
                         <img
                             src={
                                 data.profilePhoto !== null
                                     ? `data:image/png;base64,${data.profilePhoto}`
                                     : UserPhoto
                             }
-                            alt="profile photo"
+                            alt='profile photo'
                         />
                     </div>
-                    <div className="button-upload-container">
+                    <div className='button-upload-container'>
                         <IconButton
-                            aria-controls={open ? "basic-menu" : undefined}
-                            className="upload-profile-button"
-                            color="primary"
-                            aria-label="upload picture"
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            className='upload-profile-button'
+                            color='primary'
+                            aria-label='upload picture'
+                            aria-haspopup='true'
+                            aria-expanded={open ? 'true' : undefined}
                             onClick={handleClick}
-                            component="label">
+                            component='label'>
                             <PhotoCamera />
                         </IconButton>
                         <Menu
-                            id="basic-menu"
+                            id='basic-menu'
                             anchorEl={anchorEl}
                             open={open}
                             onClose={handleClose}
                             MenuListProps={{
-                                "aria-labelledby": "basic-button",
+                                'aria-labelledby': 'basic-button',
                             }}>
                             <MenuItem onClick={onFileClick}>
                                 <input
                                     onChange={handlePhotoSelect}
-                                    accept="image/*"
-                                    type="file"
+                                    accept='image/*'
+                                    type='file'
                                     ref={inputFile}
-                                    style={{ display: "none" }}
+                                    style={{ display: 'none' }}
                                 />
                                 Seleccionar archivo
                             </MenuItem>
@@ -290,49 +290,49 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
                         </Menu>
                     </div>
                 </div>
-                <div className="profile-data">
+                <div className='profile-data'>
                     <h4>
                         {userData.nombre} {userData.apellido}
                     </h4>
                     <p>
                         DNI: <span>{data.documento}</span>
                     </p>
-                    <Stack direction="row" spacing={1}>
+                    <Stack direction='row' spacing={1}>
                         <Chip
                             label={userData.estado}
                             color={getColor(userData.estado)}
-                            size="small"
+                            size='small'
                         />
                     </Stack>
                 </div>
             </div>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs value={value} onChange={handleChange} aria-label="Editar">
-                    <Tab label="Detalle de empleado" {...a11yProps(0)} />
-                    <Tab label="Habilitaciones" {...a11yProps(1)} />
-                    <Tab label="Accesos permitidos" {...a11yProps(2)} />
-                    <Tab label="Identificaciones" {...a11yProps(3)} />
-                    <Tab label="Marcaciones" {...a11yProps(4)} />
-                    <Tab label="Documentacion" {...a11yProps(5)} />
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={value} onChange={handleChange} aria-label='Editar'>
+                    <Tab label='Detalle de empleado' {...a11yProps(0)} />
+                    <Tab label='Habilitaciones' {...a11yProps(1)} />
+                    <Tab label='Accesos permitidos' {...a11yProps(2)} />
+                    <Tab label='Identificaciones' {...a11yProps(3)} />
+                    <Tab label='Marcaciones' {...a11yProps(4)} />
+                    <Tab label='Documentacion' {...a11yProps(5)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
                 <DetallesTab userData={userData} setUserData={setUserData}/>
                 <Stack
-                    direction="row"
+                    direction='row'
                     spacing={5}
-                    marginTop="30px"
-                    justifyContent="center">
+                    marginTop='30px'
+                    justifyContent='center'>
                     <Button
                         onClick={confirmarCambios}
-                        color="success"
-                        variant="outlined">
+                        color='success'
+                        variant='outlined'>
                         Confirmar cambios
                     </Button>
                     <Button
                         onClick={handleCloseEditar}
-                        color="error"
-                        variant="outlined">
+                        color='error'
+                        variant='outlined'>
                         Salir
                     </Button>
                 </Stack>
@@ -343,20 +343,20 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
                     userData={userData}
                 />
                 <Stack
-                    direction="row"
+                    direction='row'
                     spacing={5}
-                    marginTop="30px"
-                    justifyContent="center">
+                    marginTop='30px'
+                    justifyContent='center'>
                     <Button
                         onClick={handleCloseEditar}
-                        color="error"
-                        variant="outlined">
+                        color='error'
+                        variant='outlined'>
                         Salir
                     </Button>
                     <Button
                         onClick={handleSync}
                         disabled={loading}
-                        variant="contained"
+                        variant='contained'
                         startIcon={<SyncIcon />}>
                         Sincronizar
                     </Button>
@@ -365,20 +365,20 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
             <TabPanel value={value} index={2}>
                 <AccesosTab userData={userData} />
                 <Stack
-                    direction="row"
+                    direction='row'
                     spacing={5}
-                    marginTop="30px"
-                    justifyContent="center">
+                    marginTop='30px'
+                    justifyContent='center'>
                     <Button
                         onClick={handleCloseEditar}
-                        color="error"
-                        variant="outlined">
+                        color='error'
+                        variant='outlined'>
                         Salir
                     </Button>
                     <Button
                         onClick={handleSync}
                         disabled={loading}
-                        variant="contained"
+                        variant='contained'
                         startIcon={<SyncIcon />}>
                         Sincronizar
                     </Button>
@@ -387,20 +387,20 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
             <TabPanel value={value} index={3}>
                 <IdentificacionesTab userData={userData} />
                 <Stack
-                    direction="row"
+                    direction='row'
                     spacing={5}
-                    marginTop="30px"
-                    justifyContent="center">
+                    marginTop='30px'
+                    justifyContent='center'>
                     <Button
                         onClick={handleCloseEditar}
-                        color="error"
-                        variant="outlined">
+                        color='error'
+                        variant='outlined'>
                         Salir
                     </Button>
                     <Button
                         onClick={handleSync}
                         disabled={loading}
-                        variant="contained"
+                        variant='contained'
                         startIcon={<SyncIcon />}>
                         Sincronizar
                     </Button>
@@ -409,14 +409,14 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
             <TabPanel value={value} index={4}>
                 <EventosTab userData={userData} />
                 <Stack
-                    direction="row"
+                    direction='row'
                     spacing={5}
-                    marginTop="30px"
-                    justifyContent="center">
+                    marginTop='30px'
+                    justifyContent='center'>
                     <Button
                         onClick={handleCloseEditar}
-                        color="error"
-                        variant="outlined">
+                        color='error'
+                        variant='outlined'>
                         Salir
                     </Button>
                 </Stack>
@@ -424,14 +424,14 @@ export default function TabsContainer({ setData, data, handleCloseEditar }) {
             <TabPanel value={value} index={5}>
                 <DocumentacionTab userData={userData} />
                 <Stack
-                    direction="row"
+                    direction='row'
                     spacing={5}
-                    marginTop="30px"
-                    justifyContent="center">
+                    marginTop='30px'
+                    justifyContent='center'>
                     <Button
                         onClick={handleCloseEditar}
-                        color="error"
-                        variant="outlined">
+                        color='error'
+                        variant='outlined'>
                         Salir
                     </Button>
                 </Stack>

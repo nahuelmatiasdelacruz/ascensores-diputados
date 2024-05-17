@@ -1,4 +1,4 @@
-import ReportesVisitas from "./ReportesVisitas";
+import ReportesVisitas from './ReportesVisitas';
 
 const ReportesVisitasManager = {
     ReportesVisitas

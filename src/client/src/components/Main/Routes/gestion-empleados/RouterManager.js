@@ -1,7 +1,7 @@
-import Credenciales from "./Credenciales";
-import Empleados from "./Empleados";
-import Firmas from "./Firmas";
-import TiposCredencial from "./TiposCredencial";
+import Credenciales from './Credenciales';
+import Empleados from './Empleados';
+import Firmas from './Firmas';
+import TiposCredencial from './TiposCredencial';
 
 const GestionEmpRouter = {
     Credenciales,

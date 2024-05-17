@@ -1,4 +1,4 @@
-const bcryptjs = require("bcryptjs");
+const bcryptjs = require('bcryptjs');
 
 const usuariosGet = async (req, res) => {
 	
@@ -14,14 +14,14 @@ const usuariosPut = async (req, res) => {
 		const salt = bcryptjs.genSaltSync();
 		resto.password = bcryptjs.hashSync(password, salt);
 	}
-	const usuario = "" // TODO: Agregar endpoint para DB;
+	const usuario = '' // TODO: Agregar endpoint para DB;
 	res.json(usuario);
 };
 const usuariosPost = async (req, res) => {
 	const { nombre, correo, password, rol } = req.body;
 	// TODO: Endpoint para DB
 	res.json({
-		msg: "Post api - Controlador",
+		msg: 'Post api - Controlador',
 		usuario,
 	});
 };

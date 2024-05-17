@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import "../../../styles/styles.css";
+import '../../../styles/styles.css';
 import EdgesensorLowIcon from '@mui/icons-material/EdgesensorLow';
 import PersonIcon from '@mui/icons-material/Person';
 import TourIcon from '@mui/icons-material/Tour';
@@ -17,7 +17,7 @@ import TagFacesIcon from '@mui/icons-material/TagFaces';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 const Index = () => {
-    const [tipoRegistros,setTipoRegistros] = useState("mensual");
+    const [tipoRegistros,setTipoRegistros] = useState('mensual');
     const handleChangeTipo = (e) => {
         setTipoRegistros(e.target.value)
     }
@@ -138,100 +138,100 @@ const Index = () => {
         },
     ];
     return(
-        <div className="index-container">
-            <div className="index-header">
+        <div className='index-container'>
+            <div className='index-header'>
                 <DashboardIcon/>
                 <h4>Dashboard</h4>
             </div>
-            <div className="main-data">
-                <div className="dashboard-values">
-                    <div className="value">
-                        <div className="icon-image">
+            <div className='main-data'>
+                <div className='dashboard-values'>
+                    <div className='value'>
+                        <div className='icon-image'>
                             <PersonIcon sx={{fontSize: 50}}/>
                         </div>
-                        <p className="icon-title">Usuarios</p>
-                        <p className="icon-values">232</p>
+                        <p className='icon-title'>Usuarios</p>
+                        <p className='icon-values'>232</p>
                     </div>
-                    <div className="value">
-                        <div className="icon-image">
+                    <div className='value'>
+                        <div className='icon-image'>
                             <TagFacesIcon sx={{fontSize: 50}}/>
                         </div>
-                        <p className="icon-title">Visual Face</p>
-                        <p className="icon-values">0</p>
+                        <p className='icon-title'>Visual Face</p>
+                        <p className='icon-values'>0</p>
                     </div>
-                    <div className="value">
-                        <div className="icon-image">
+                    <div className='value'>
+                        <div className='icon-image'>
                             <FingerprintIcon sx={{fontSize: 50}}/>
                         </div>
-                        <p className="icon-title">Huellas</p>
-                        <p className="icon-values">411</p>
+                        <p className='icon-title'>Huellas</p>
+                        <p className='icon-values'>411</p>
                     </div>
-                    <div className="value">
-                        <div className="icon-image">
+                    <div className='value'>
+                        <div className='icon-image'>
                             <CreditCardIcon sx={{fontSize: 50}}/>
                         </div>
-                        <p className="icon-title">Tarjetas</p>
-                        <p className="icon-values">12346</p>
+                        <p className='icon-title'>Tarjetas</p>
+                        <p className='icon-values'>12346</p>
                     </div>
-                    <div className="value">
-                        <div className="icon-image">
+                    <div className='value'>
+                        <div className='icon-image'>
                             <EdgesensorLowIcon sx={{fontSize: 50}}/>
                         </div>
-                        <p className="icon-title">Dispositivos</p>
-                        <p className="icon-values">1233</p>
+                        <p className='icon-title'>Dispositivos</p>
+                        <p className='icon-values'>1233</p>
                     </div>
-                    <div className="value">
-                        <div className="icon-image">
+                    <div className='value'>
+                        <div className='icon-image'>
                             <LocationOnIcon sx={{fontSize: 50}}/>
                         </div>
-                        <p className="icon-title">Área</p>
-                        <p className="icon-values">0</p>
+                        <p className='icon-title'>Área</p>
+                        <p className='icon-values'>0</p>
                     </div>
-                    <div className="value">
-                        <div className="icon-image">
+                    <div className='value'>
+                        <div className='icon-image'>
                             <SecurityIcon sx={{fontSize: 50}}/>
                         </div>
-                        <p className="icon-title">Grupos</p>
-                        <p className="icon-values">5</p>
+                        <p className='icon-title'>Grupos</p>
+                        <p className='icon-values'>5</p>
                     </div>
                 </div>
-                <div className="visits">
-                    <div className="visits-header">
-                        <TourIcon color="primary" />
+                <div className='visits'>
+                    <div className='visits-header'>
+                        <TourIcon color='primary' />
                         <h4>Visitas hoy</h4>
                     </div>
-                    <div className="visits-value">
+                    <div className='visits-value'>
                         <h3>32</h3>
                     </div>
                 </div>
             </div>
-            <div className="registros-diarios">
-                <div className="registros-header">
+            <div className='registros-diarios'>
+                <div className='registros-header'>
                     <h4>Registros diarios</h4>
                     <Box>
                       <FormControl sx={{width: 160}}>
-                        <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
-                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={tipoRegistros} label="Age" onChange={handleChangeTipo}>
-                          <MenuItem value="mensual">Mensual</MenuItem>
-                          <MenuItem value="semanal">Semanal</MenuItem>
-                          <MenuItem value="diario">Diario</MenuItem>
+                        <InputLabel id='demo-simple-select-label'>Tipo</InputLabel>
+                        <Select labelId='demo-simple-select-label' id='demo-simple-select' value={tipoRegistros} label='Age' onChange={handleChangeTipo}>
+                          <MenuItem value='mensual'>Mensual</MenuItem>
+                          <MenuItem value='semanal'>Semanal</MenuItem>
+                          <MenuItem value='diario'>Diario</MenuItem>
                         </Select>
                       </FormControl>
                     </Box>
                 </div>
-                <div style={{width:"100%", height:"70%"}}>
+                <div style={{width:'100%', height:'70%'}}>
                     <LineChart width={1500} height={300} data={data} margin={{top: 5,right: 30,left: 20,bottom: 5,}}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
+                      <CartesianGrid strokeDasharray='3 3' />
+                      <XAxis dataKey='name' />
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Line type="monotone" dataKey="mupd" stroke="#0a1128ff" activeDot={{ r: 8 }} />
-                      <Line type="monotone" dataKey="mt" stroke="#1282a2ff" />
+                      <Line type='monotone' dataKey='mupd' stroke='#0a1128ff' activeDot={{ r: 8 }} />
+                      <Line type='monotone' dataKey='mt' stroke='#1282a2ff' />
                     </LineChart>
                 </div>
             </div>
-            <div className="real-time-register">
+            <div className='real-time-register'>
 
             </div>
         </div>

@@ -1,5 +1,5 @@
-import Espacios from "./Espacios";
-import Oficinas from "./Oficinas";
+import Espacios from './Espacios';
+import Oficinas from './Oficinas';
 
 const GestionEspManager = {
     Espacios,

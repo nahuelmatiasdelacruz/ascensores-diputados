@@ -1,17 +1,17 @@
 /* Normal imports */
-import React, { useEffect, useState } from "react";
-import loadingFinger from "../../../../../img/loadingFinger.gif";
-import toast, {Toaster} from "react-hot-toast";
-import { stylesModal } from "../../../../../styles/customStyles";
-import { server } from "../../../../../helpers/constants";
-import dayjs from "dayjs";
+import React, { useEffect, useState } from 'react';
+import loadingFinger from '../../../../../img/loadingFinger.gif';
+import toast, {Toaster} from 'react-hot-toast';
+import { stylesModal } from '../../../../../styles/customStyles';
+import { server } from '../../../../../helpers/constants';
+import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import axios from "axios";
+import axios from 'axios';
 
 /* Material UI */
 import Box from '@mui/material/Box';
-import { DataGrid, esES } from '@mui/x-data-grid';
-import Modal from "@mui/material/Modal";
+import { DataGrid } from '@mui/x-data-grid';import { esES } from '@mui/x-data-grid/locales';
+import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -30,7 +30,7 @@ import Switch from '@mui/material/Switch';
 
 const IdentificacionesTab = ({userData}) => {
     const IOSSwitch = styled((props) => (
-        <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+        <Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />
     ))(({ theme }) => ({
         width: 42,
         height: 26,
@@ -80,22 +80,22 @@ const IdentificacionesTab = ({userData}) => {
         },
     }));
     const dedos = [
-        {id: 1, label: "IZQUIERDA - MEÑIQUE"},
-        {id: 2, label: "IZQUIERDA - ANULAR"},
-        {id: 3, label: "IZQUIERDA - MEDIO"},
-        {id: 4, label: "IZQUIERDA - INDICE"},
-        {id: 5, label: "IZQUIERDA - PULGAR"},
-        {id: 6, label: "DERECHA - PULGAR"},
-        {id: 7, label: "DERECHA - INDICE"},
-        {id: 8, label: "DERECHA - MEDIO"},
-        {id: 9, label: "DERECHA - ANULAR"},
-        {id: 10, label: "DERECHA - MEÑIQUE"},
+        {id: 1, label: 'IZQUIERDA - MEÑIQUE'},
+        {id: 2, label: 'IZQUIERDA - ANULAR'},
+        {id: 3, label: 'IZQUIERDA - MEDIO'},
+        {id: 4, label: 'IZQUIERDA - INDICE'},
+        {id: 5, label: 'IZQUIERDA - PULGAR'},
+        {id: 6, label: 'DERECHA - PULGAR'},
+        {id: 7, label: 'DERECHA - INDICE'},
+        {id: 8, label: 'DERECHA - MEDIO'},
+        {id: 9, label: 'DERECHA - ANULAR'},
+        {id: 10, label: 'DERECHA - MEÑIQUE'},
     ]
     const [loading,setLoading] = useState(false);
     const [openModalAdd,setOpenModalAdd] = useState(false);
     const [openEditar,setOpenEditar] = useState(false);
     const [selectedRow,setSelectedRow] = useState({});
-    const [selectedRoller,setSelectedRoller] = useState("");
+    const [selectedRoller,setSelectedRoller] = useState('');
     const [openBorrar,setOpenBorrar] = useState(false);
     const [scanningFinger,setScanningFinger] = useState(false);
     const [dispositivos,setDispositivos] = useState([]);
@@ -111,21 +111,21 @@ const IdentificacionesTab = ({userData}) => {
         setOpenModalAdd(true);
     }
     const handleCloseEditar = () => {
-        setSelectedRoller("");
+        setSelectedRoller('');
         setSelectedRow({});
         setOpenEditar(false);
     }
     const handleCloseAdd = () => {
         if(!scanningFinger){
-            setSelectedRoller("");
+            setSelectedRoller('');
             setSelectedRow({});
             setOpenModalAdd(false);
         }else{
-            toast.error("Por favor, aguarde a que finalice el proceso de enrolamiento");
+            toast.error('Por favor, aguarde a que finalice el proceso de enrolamiento');
         }
     }
     const handleCloseBorrar = () =>{
-        setSelectedRoller("");
+        setSelectedRoller('');
         setSelectedRow({});
         setOpenBorrar(false);
     }
@@ -147,7 +147,7 @@ const IdentificacionesTab = ({userData}) => {
             setLoading(false);
         }catch(e){
             setLoading(false);
-            toast.error("Hubo un error al buscar las huellas del usuario en la base de datos");
+            toast.error('Hubo un error al buscar las huellas del usuario en la base de datos');
         }
     }
     const getTarjetas = async (id) => {
@@ -179,7 +179,7 @@ const IdentificacionesTab = ({userData}) => {
     }
     const formatDate = (date) => {
         if(date){
-            const formated = dayjs(date).format("DD-MM-YYYY HH:mm:ss");
+            const formated = dayjs(date).format('DD-MM-YYYY HH:mm:ss');
             return formated;
         }else{
             return null;
@@ -199,14 +199,14 @@ const IdentificacionesTab = ({userData}) => {
             setNuevaTarjeta({});
             setLoading(false)
             setOpenModalTarjeta(false);
-            toast.success("Se ha agregado la tarjeta correctamente");
+            toast.success('Se ha agregado la tarjeta correctamente');
         }catch(e){
             toast.error(`No se pudo agregar la tarjeta: \n${e.message}`);
             setLoading(false);
         }
     }
     const startScan = async () => {
-        if(selectedRoller!==""){
+        if(selectedRoller!==''){
             setScanningFinger(true);
             try{
                 const response = await axios.post(`${server}/api/huellas`,{
@@ -214,7 +214,7 @@ const IdentificacionesTab = ({userData}) => {
                     equipo_id: selectedRoller,
                     dedo_id: selectedDedo
                 });
-                toast.success("Se ha enrolado la huella correctamente!");
+                toast.success('Se ha enrolado la huella correctamente!');
                 await getHuellas(userData.empleado_id);
                 setScanningFinger(false);
                 handleCloseAdd();
@@ -224,19 +224,19 @@ const IdentificacionesTab = ({userData}) => {
                 handleCloseAdd();
             }
         }else{
-            toast.error("Por favor seleccione un enrolador");
+            toast.error('Por favor seleccione un enrolador');
             return;
         }
     }
     const gridColumns = [
-        {field: "descripcion", headerName: "Descripción", width: 300},
-        {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Acciones",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'descripcion', headerName: 'Descripción', width: 300},
+        {field: 'actions',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Acciones',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <Stack direction="row" spacing={1}>
-                    <IconButton onClick={(e)=>{editarHuella(e,params.row)}} color="success" aria-label="edit">
+                <Stack direction='row' spacing={1}>
+                    <IconButton onClick={(e)=>{editarHuella(e,params.row)}} color='success' aria-label='edit'>
                         <EditIcon/>
                     </IconButton>
-                    <IconButton onClick={(e)=>{borrarHuella(e,params.row)}} color="error" aria-label="delete">
+                    <IconButton onClick={(e)=>{borrarHuella(e,params.row)}} color='error' aria-label='delete'>
                         <DeleteIcon/>
                     </IconButton>
                 </Stack>
@@ -244,11 +244,11 @@ const IdentificacionesTab = ({userData}) => {
         }},
     ]
     const tarjetasColumns = [
-        {field: "id", headerName: "ID", width:150},
-        {field: "display", headerName: "Número", width: 200},
-        {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Habilitada",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'id', headerName: 'ID', width:150},
+        {field: 'display', headerName: 'Número', width: 200},
+        {field: 'actions',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Habilitada',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <Stack direction="row" spacing={1}>
+                <Stack direction='row' spacing={1}>
                     <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked={true}/>}/>
                 </Stack>
             )
@@ -256,7 +256,7 @@ const IdentificacionesTab = ({userData}) => {
     ]
     const getDevices = async () => {
         setLoading(true);
-        const devices = await axios.get(server+"/api/dispositivos");
+        const devices = await axios.get(server+'/api/dispositivos');
         const parsed = devices.data.map((device)=>{
             return {
                 ...device,
@@ -288,11 +288,11 @@ const IdentificacionesTab = ({userData}) => {
         try{
             await axios.delete(`${server}/api/huellas/${selectedRow.id}`);
             await getHuellas(userData.empleado_id);
-            toast.success("Se ha borrado con éxito la huella seleccionada");
+            toast.success('Se ha borrado con éxito la huella seleccionada');
             handleCloseBorrar();
             setLoading(false);
         }catch(e){
-            toast.error("Hubo un error al borrar la huella");
+            toast.error('Hubo un error al borrar la huella');
             handleCloseBorrar();
             setLoading(false);
         }
@@ -303,130 +303,130 @@ const IdentificacionesTab = ({userData}) => {
         getTarjetas(userData.id);
     },[userData]);
     return(
-        <div className="accesos-container">
+        <div className='accesos-container'>
             <Toaster/>
             {/* Borrar huella */}
-            <Modal open={openBorrar} onClose={handleCloseBorrar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={openBorrar} onClose={handleCloseBorrar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <h1 className="confirmation-text">¿Confirma que desea borrar la huella?</h1>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={confirmarBorradoHuella} color="success" variant="outlined">Si</Button>
-                        <Button onClick={handleCloseBorrar} color="error" variant="outlined">No</Button>
+                    <h1 className='confirmation-text'>¿Confirma que desea borrar la huella?</h1>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={confirmarBorradoHuella} color='success' variant='outlined'>Si</Button>
+                        <Button onClick={handleCloseBorrar} color='error' variant='outlined'>No</Button>
                     </Stack>
                 </Box>
             </Modal>
             {/* Añadir editar huella */}
-            <Modal open={openEditar} onClose={handleCloseEditar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={openEditar} onClose={handleCloseEditar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                        <div className="content-header">
+                    <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                        <div className='content-header'>
                             <h3>Modificar huella</h3>
-                            <p>Por favor, coloque la huella en el lector y pulse "Iniciar escaneo"</p>
+                            <p>Por favor, coloque la huella en el lector y pulse 'Iniciar escaneo'</p>
                         </div>
-                        <div className="loading-finger">
-                            <img src={loadingFinger} alt="loadingFinger"/>
+                        <div className='loading-finger'>
+                            <img src={loadingFinger} alt='loadingFinger'/>
                         </div>
                     </Box>
-                    <TextField onChange={setNewRoller} sx={{width: "60%",marginBottom: "20px"}} id="select-enrolador" select label="Enrolador">
+                    <TextField onChange={setNewRoller} sx={{width: '60%',marginBottom: '20px'}} id='select-enrolador' select label='Enrolador'>
                         {
                             dispositivos.map((dispositivo)=><MenuItem key={dispositivo.equipo_id} value={dispositivo.equipo_id}>{dispositivo.descripcion}</MenuItem>)
                         }
                     </TextField>
-                    <LoadingButton disabled={selectedRoller !== "" ? false : true} color="primary" onClick={startScan} loading={scanningFinger} loadingPosition="center" variant="outlined">
+                    <LoadingButton disabled={selectedRoller !== '' ? false : true} color='primary' onClick={startScan} loading={scanningFinger} loadingPosition='center' variant='outlined'>
                         <span>Escanear huella</span>
                     </LoadingButton>
                 </Box>
             </Modal>
             {/* Añadir huella */}
-            <Modal open={openModalAdd} onClose={handleCloseAdd} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={openModalAdd} onClose={handleCloseAdd} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                        <div className="content-header">
+                    <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                        <div className='content-header'>
                             <h3>Añadir una nueva huella</h3>
-                            <p>Por favor, coloque la huella en el lector y pulse "Iniciar escaneo"</p>
+                            <p>Por favor, coloque la huella en el lector y pulse 'Iniciar escaneo'</p>
                         </div>
-                        <div className="loading-finger">
-                            <img src={loadingFinger} alt="loadingFinger"/>
+                        <div className='loading-finger'>
+                            <img src={loadingFinger} alt='loadingFinger'/>
                         </div>
                     </Box>
-                    <TextField onChange={setNewRoller} sx={{width: "60%",marginBottom: "20px"}} id="select-enrolador" select label="Enrolador">
+                    <TextField onChange={setNewRoller} sx={{width: '60%',marginBottom: '20px'}} id='select-enrolador' select label='Enrolador'>
                     {
                         dispositivos.map((dispositivo)=><MenuItem key={dispositivo.equipo_id} value={dispositivo.equipo_id}>{dispositivo.descripcion}</MenuItem>)
                     }
                     </TextField>
-                    <TextField defaultValue={dedos[1].id} onChange={handleChangeDedo} sx={{width: "60%",marginBottom: "20px"}} id="select-dedo" select label="Dedo">
+                    <TextField defaultValue={dedos[1].id} onChange={handleChangeDedo} sx={{width: '60%',marginBottom: '20px'}} id='select-dedo' select label='Dedo'>
                     {
                         dedos.map((dedo)=><MenuItem key={dedo.id} value={dedo.id}>{dedo.label}</MenuItem>)
                     }
                     </TextField>
-                    <LoadingButton color="primary" onClick={startScan} loading={scanningFinger} loadingPosition="center" variant="outlined">
+                    <LoadingButton color='primary' onClick={startScan} loading={scanningFinger} loadingPosition='center' variant='outlined'>
                         <span>Escanear huella</span>
                     </LoadingButton>
                 </Box>
             </Modal>
             {/* Añadir tarjeta */}
-            <Modal open={modalTarjeta} onClose={handleCloseModalTarjeta} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={modalTarjeta} onClose={handleCloseModalTarjeta} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                        <div className="content-header">
+                    <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                        <div className='content-header'>
                             <h3>Añadir una nueva tarjeta</h3>
                         </div>
                     </Box>
-                    <Box sx={{marginBottom: "20px"}}>
-                        <TextField type="number" size="small" onChange={handleChangeNumberCard} label="Numero de tarjeta"/>
+                    <Box sx={{marginBottom: '20px'}}>
+                        <TextField type='number' size='small' onChange={handleChangeNumberCard} label='Numero de tarjeta'/>
                     </Box>
-                    <Box sx={{marginBottom: "15px"}}>
-                        <h4 className="info-title">Valido desde: </h4>
-                        <DesktopDateTimePicker format="DD-MM-YYYY HH:mm" value={dayjs(nuevaTarjeta.fromDate) || null} label="Fecha desde" onChange={handleChangeFromDate} sx={{marginBottom: "15px"}} />
+                    <Box sx={{marginBottom: '15px'}}>
+                        <h4 className='info-title'>Valido desde: </h4>
+                        <DesktopDateTimePicker format='DD-MM-YYYY HH:mm' value={dayjs(nuevaTarjeta.fromDate) || null} label='Fecha desde' onChange={handleChangeFromDate} sx={{marginBottom: '15px'}} />
                     </Box>
-                    <Box sx={{marginBottom: "25px"}}>
-                        <h4 className="info-title">Valido hasta: </h4>
-                        <DesktopDateTimePicker format="DD-MM-YYYY HH:mm" value={dayjs(nuevaTarjeta.toDate) || null} label="Fecha hasta" onChange={handleChangeToDate} sx={{marginBottom: "15px"}} />
+                    <Box sx={{marginBottom: '25px'}}>
+                        <h4 className='info-title'>Valido hasta: </h4>
+                        <DesktopDateTimePicker format='DD-MM-YYYY HH:mm' value={dayjs(nuevaTarjeta.toDate) || null} label='Fecha hasta' onChange={handleChangeToDate} sx={{marginBottom: '15px'}} />
                     </Box>
-                    <Box sx={{marginBottom: "25px"}}>
-                        <TextField value={nuevaTarjeta.observaciones || ""} type="text" onChange={handleChangeObservacionesTarjeta} label="Observaciones"/>
+                    <Box sx={{marginBottom: '25px'}}>
+                        <TextField value={nuevaTarjeta.observaciones || ''} type='text' onChange={handleChangeObservacionesTarjeta} label='Observaciones'/>
                     </Box>
-                    <Stack sx={{marginTop: "20px"}} direction="row" spacing={4}>
-                        <LoadingButton color="success" onClick={confirmarNuevaTarjeta} loading={loading} loadingPosition="center" variant="outlined">
+                    <Stack sx={{marginTop: '20px'}} direction='row' spacing={4}>
+                        <LoadingButton color='success' onClick={confirmarNuevaTarjeta} loading={loading} loadingPosition='center' variant='outlined'>
                             <span>Confirmar</span>
                         </LoadingButton>
-                        <Button color="error" onClick={handleCloseModalTarjeta} variant="outlined">
+                        <Button color='error' onClick={handleCloseModalTarjeta} variant='outlined'>
                             <span>Cancelar</span>
                         </Button>
                     </Stack>
                 </Box>
             </Modal>
-            <div className="huellas">
+            <div className='huellas'>
                 <h4>Huellas digitales</h4>
-                <Box sx={{width:"500px",margin:"0 0 10px 0", height: "400px"}}>
+                <Box sx={{width:'500px',margin:'0 0 10px 0', height: '400px'}}>
                     <DataGrid
                         disableRowSelectionOnClick={true}
-                        sx={{margin: "0", height: "80%"}}
+                        sx={{margin: '0', height: '80%'}}
                         loading={loading}
                         rows={huellas}
                         columns={gridColumns}
                         autoPageSize
                         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                     />
-                    <Box sx={{marginTop: "20px", width: "100%", display: "flex", flexDirection: "row", alignItems:"center",justifyContent:"space-between"}}>
-                        <Button onClick={addHuella} variant="outlined" startIcon={<AddIcon/>}>Añadir huella</Button>
+                    <Box sx={{marginTop: '20px', width: '100%', display: 'flex', flexDirection: 'row', alignItems:'center',justifyContent:'space-between'}}>
+                        <Button onClick={addHuella} variant='outlined' startIcon={<AddIcon/>}>Añadir huella</Button>
                     </Box>
                 </Box>
             </div>
-            <div className="tarjetas">
+            <div className='tarjetas'>
                 <h4>Tarjetas</h4>
-                <Box sx={{width:"490px",margin:"0 0 10px 0", height: "400px"}}>
+                <Box sx={{width:'490px',margin:'0 0 10px 0', height: '400px'}}>
                     <DataGrid
                         disableRowSelectionOnClick={true}
-                        sx={{margin: "0", height: "80%"}}
+                        sx={{margin: '0', height: '80%'}}
                         loading={loading}
                         rows={tarjetas}
                         columns={tarjetasColumns}
                         autoPageSize
                         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                     />
-                    <Box sx={{marginTop: "20px", width: "100%", display: "flex", flexDirection: "row", alignItems:"center",justifyContent:"space-between"}}>
-                        <Button onClick={addTarjeta} variant="outlined" startIcon={<AddIcon/>}>Añadir tarjeta</Button>
+                    <Box sx={{marginTop: '20px', width: '100%', display: 'flex', flexDirection: 'row', alignItems:'center',justifyContent:'space-between'}}>
+                        <Button onClick={addTarjeta} variant='outlined' startIcon={<AddIcon/>}>Añadir tarjeta</Button>
                     </Box>
                 </Box>
             </div>

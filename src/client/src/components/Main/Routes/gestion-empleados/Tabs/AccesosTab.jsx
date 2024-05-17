@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {useNavigate} from "react-router-dom";
-import {server} from "../../../../../helpers/constants";
+import {useNavigate} from 'react-router-dom';
+import {server} from '../../../../../helpers/constants';
 
 // Material UI
 import Box from '@mui/material/Box';
-import { DataGrid, esES } from '@mui/x-data-grid';
-import Modal from "@mui/material/Modal";
+import { DataGrid } from '@mui/x-data-grid';import { esES } from '@mui/x-data-grid/locales';
+import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -46,7 +46,7 @@ const AccesosTab = ({userData}) => {
             setSelected({});
             handleCloseBorrarEquipo();
         }catch(e){
-            toast.error("Hubo un error al borrar el equipo asociado")
+            toast.error('Hubo un error al borrar el equipo asociado')
             setSelected({});
             handleCloseBorrarEquipo();
         }
@@ -58,7 +58,7 @@ const AccesosTab = ({userData}) => {
             setSelected({});
             handleCloseBorrarGrupo();
         }  catch(e){
-            toast.error("Hubo un error al borrar el grupo asociado");
+            toast.error('Hubo un error al borrar el grupo asociado');
             setSelected({});
             handleCloseBorrarGrupo();
         }
@@ -130,7 +130,7 @@ const AccesosTab = ({userData}) => {
         setModalBorrarGrupo(false);
     }
     const editarGrupoRow = () => {
-        navigate("/equipos/grupos");
+        navigate('/equipos/grupos');
     }
     const handleCloseAgregarGrupo = () => {
         setModalAgregarGrupo(false);
@@ -153,12 +153,12 @@ const AccesosTab = ({userData}) => {
     }
     /* Columnas de grids */
     const equiposAsociadosColumns = [
-        {field: "id", headerName: "ID", width: 100},
-        {field: "descripcion", headerName: "Descripción", width: 200},
-        {field: "delete",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Eliminar",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'id', headerName: 'ID', width: 100},
+        {field: 'descripcion', headerName: 'Descripción', width: 200},
+        {field: 'delete',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Eliminar',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <Stack direction="row" spacing={1}>
-                    <IconButton onClick={(e)=>{borrarDispositivoSeleccionado(e,params.row)}} color="error" aria-label="delete">
+                <Stack direction='row' spacing={1}>
+                    <IconButton onClick={(e)=>{borrarDispositivoSeleccionado(e,params.row)}} color='error' aria-label='delete'>
                         <DeleteIcon/>
                     </IconButton>
                 </Stack>
@@ -166,15 +166,15 @@ const AccesosTab = ({userData}) => {
         }},
     ];
     const gruposAsociadosColumns = [
-        {field: "id",headerName: "ID"},
-        {field: "grupo", headerName: "Descripción", width: 200},
-        {field: "delete",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Eliminar",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'id',headerName: 'ID'},
+        {field: 'grupo', headerName: 'Descripción', width: 200},
+        {field: 'delete',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Eliminar',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <Stack direction="row" spacing={1}>
-                    <IconButton onClick={()=>{navigate("/equipos/grupos")}} color="success" aria-label="edit">
+                <Stack direction='row' spacing={1}>
+                    <IconButton onClick={()=>{navigate('/equipos/grupos')}} color='success' aria-label='edit'>
                         <EditIcon/>
                     </IconButton>
-                    <IconButton onClick={(e)=>{borrarGrupoSeleccionado(e,params.row)}} color="error" aria-label="delete">
+                    <IconButton onClick={(e)=>{borrarGrupoSeleccionado(e,params.row)}} color='error' aria-label='delete'>
                         <DeleteIcon/>
                     </IconButton>
                 </Stack>
@@ -196,52 +196,52 @@ const AccesosTab = ({userData}) => {
         getData();
     },[]);
     return(
-        <div className="accesos-container">
-            <Modal open={modalAgregarGrupo} onClose={handleCloseAgregarGrupo} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <div className='accesos-container'>
+            <Modal open={modalAgregarGrupo} onClose={handleCloseAgregarGrupo} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <h1 style={{textAlign: "center"}} className="confirmation-text">¿Confirma que desea asociar el grupo <span>{selected?.label}</span> al usuario <span>{userData?.nombre + " " + userData?.apellido}</span>?</h1>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={confirmarAgregado} color="success" variant="outlined">Si</Button>
-                        <Button onClick={handleCloseAgregarGrupo} color="error" variant="outlined">No</Button>
+                    <h1 style={{textAlign: 'center'}} className='confirmation-text'>¿Confirma que desea asociar el grupo <span>{selected?.label}</span> al usuario <span>{userData?.nombre + ' ' + userData?.apellido}</span>?</h1>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={confirmarAgregado} color='success' variant='outlined'>Si</Button>
+                        <Button onClick={handleCloseAgregarGrupo} color='error' variant='outlined'>No</Button>
                     </Stack>
                 </Box>
             </Modal>
-            <Modal open={modalAgregarEquipo} onClose={handleCloseAgregarEquipo} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={modalAgregarEquipo} onClose={handleCloseAgregarEquipo} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <h1 style={{textAlign: "center"}} className="confirmation-text">¿Confirma que desea asociar el equipo <span>{selected?.label}</span> al usuario <span>{userData?.nombre + " " + userData?.apellido}</span>?</h1>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={confirmarAgregadoEquipo} color="success" variant="outlined">Si</Button>
-                        <Button onClick={handleCloseAgregarEquipo} color="error" variant="outlined">No</Button>
+                    <h1 style={{textAlign: 'center'}} className='confirmation-text'>¿Confirma que desea asociar el equipo <span>{selected?.label}</span> al usuario <span>{userData?.nombre + ' ' + userData?.apellido}</span>?</h1>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={confirmarAgregadoEquipo} color='success' variant='outlined'>Si</Button>
+                        <Button onClick={handleCloseAgregarEquipo} color='error' variant='outlined'>No</Button>
                     </Stack>
                 </Box>
             </Modal>
             <Modal open={modalBorrarGrupo} onClose={handleCloseBorrarGrupo}>
                 <Box sx={stylesModal}>
-                    <h1 style={{textAlign: "center"}} className="confirmation-text">¿Desea eliminar de la lista de asociados el grupo seleccionado?</h1>
-                    <h2 style={{textAlign: "center"}} className="confirmation-text"><span>{selected?.grupo}</span></h2>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={confirmarBorrarGrupoAsociado} color="success" variant="outlined">Si</Button>
-                        <Button onClick={handleCloseBorrarGrupo} color="error" variant="outlined">No</Button>
+                    <h1 style={{textAlign: 'center'}} className='confirmation-text'>¿Desea eliminar de la lista de asociados el grupo seleccionado?</h1>
+                    <h2 style={{textAlign: 'center'}} className='confirmation-text'><span>{selected?.grupo}</span></h2>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={confirmarBorrarGrupoAsociado} color='success' variant='outlined'>Si</Button>
+                        <Button onClick={handleCloseBorrarGrupo} color='error' variant='outlined'>No</Button>
                     </Stack>
                 </Box>
             </Modal>
             <Modal open={modalBorrarEquipo} onClose={handleCloseBorrarEquipo}>
                 <Box sx={stylesModal}>
-                    <h1 style={{textAlign: "center"}} className="confirmation-text">¿Desea eliminar de la lista de asociados el equipo seleccionado?</h1>
-                    <h2 style={{textAlign: "center"}} className="confirmation-text"><span>{selected?.descripcion}</span></h2>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={confirmarBorrarEquipo} color="success" variant="outlined">Si</Button>
-                        <Button onClick={handleCloseBorrarEquipo} color="error" variant="outlined">No</Button>
+                    <h1 style={{textAlign: 'center'}} className='confirmation-text'>¿Desea eliminar de la lista de asociados el equipo seleccionado?</h1>
+                    <h2 style={{textAlign: 'center'}} className='confirmation-text'><span>{selected?.descripcion}</span></h2>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={confirmarBorrarEquipo} color='success' variant='outlined'>Si</Button>
+                        <Button onClick={handleCloseBorrarEquipo} color='error' variant='outlined'>No</Button>
                     </Stack>
                 </Box>
             </Modal>
-            <div className="grupos">
+            <div className='grupos'>
                 <h4>Grupos de accesos</h4>
-                <Box sx={{width:"500px",margin:"0 0 10px 0", height: "400px"}}>
+                <Box sx={{width:'500px',margin:'0 0 10px 0', height: '400px'}}>
                     <DataGrid
                         onRowClick={editarGrupoRow}
                         disableRowSelectionOnClick={true}
-                        sx={{height: "80%"}}
+                        sx={{height: '80%'}}
                         loading={loading}
                         rows={gruposAsociados}
                         columns={gruposAsociadosColumns}
@@ -250,19 +250,19 @@ const AccesosTab = ({userData}) => {
                     />
                     <Autocomplete 
                         onChange={setGrupoParaAsociar}
-                        loading={loading} size="small" disablePortal id="combo-box" options={gruposParaAsociar} 
+                        loading={loading} size='small' disablePortal id='combo-box' options={gruposParaAsociar} 
                         sx={{ width: 330 , marginBottom: 2, marginTop: 2}}
-                        renderInput={(params) => <TextField {...params} label="Buscar grupo"/>}
+                        renderInput={(params) => <TextField {...params} label='Buscar grupo'/>}
                     />
                 </Box>
             </div>
-            <div className="equipos">
+            <div className='equipos'>
                 <h4>Equipos específicos</h4>
-                <Box sx={{width:"500px",margin:"0 0 10px 0", height: "400px"}}>
+                <Box sx={{width:'500px',margin:'0 0 10px 0', height: '400px'}}>
                     <DataGrid
                         onRowClick={editarGrupoRow}
                         disableRowSelectionOnClick={true}
-                        sx={{height: "80%"}}
+                        sx={{height: '80%'}}
                         loading={loading}
                         rows={equiposAsociados}
                         columns={equiposAsociadosColumns}
@@ -271,9 +271,9 @@ const AccesosTab = ({userData}) => {
                     />
                     <Autocomplete
                         onChange={setEquipoParaAsociar}
-                        loading={loading} size="small" disablePortal id="combo-box" options={equiposParaAsociar} 
+                        loading={loading} size='small' disablePortal id='combo-box' options={equiposParaAsociar} 
                         sx={{ width: 330 , marginBottom: 2, marginTop: 2}}
-                        renderInput={(params) => <TextField {...params} label="Buscar equipo"/>}
+                        renderInput={(params) => <TextField {...params} label='Buscar equipo'/>}
                     />
                 </Box>
             </div>

@@ -1,6 +1,6 @@
 const esAdminRole = async (req,res,next)=> {
     const {role,nombre} = req.user;
-    if(role!=="ADMIN_ROLE"){
+    if(role!=='ADMIN_ROLE'){
         return res.status(401).json({
             msg: `El usuario ${nombre} no es administrador`
         });

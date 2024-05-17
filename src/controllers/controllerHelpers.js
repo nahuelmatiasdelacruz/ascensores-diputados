@@ -67,9 +67,9 @@ const syncDevices = async (id) => {
     });
     try{
         if(obj.equipos.length > 0){
-            const response = await axios.post("http://127.0.0.1:9099",obj,{
+            const response = await axios.post('http://127.0.0.1:9099',obj,{
                 headers: {
-                    "x-action":"AgregarUsuario"
+                    'x-action':'AgregarUsuario'
                 }
             });
             console.log(response.data);

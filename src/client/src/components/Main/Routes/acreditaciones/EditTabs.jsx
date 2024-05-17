@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import UserPhoto from "../../../../img/no-profile2.png";
+import UserPhoto from '../../../../img/no-profile2.png';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -23,7 +23,7 @@ function TabPanel(props) {
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -60,32 +60,32 @@ export default function EditTabs({data}) {
     console.log(data);
   },[])
   return (
-    <Box sx={{ width: '80%', backgroundColor: "white", margin: "0 auto", marginTop: "30px", boxSizing: "border-box", padding: "20px",borderRadius: "6px"}}>
-      <div className="profile-data-header">
-        <div className="profile-photo-container">
-          <img src={UserPhoto} alt="profile photo"/>
-          <div className="button-upload-container">
-            <IconButton className="upload-profile-button" color="primary" aria-label="upload picture" component="label">
-              <input hidden accept="image/*" type="file"/>
+    <Box sx={{ width: '80%', backgroundColor: 'white', margin: '0 auto', marginTop: '30px', boxSizing: 'border-box', padding: '20px',borderRadius: '6px'}}>
+      <div className='profile-data-header'>
+        <div className='profile-photo-container'>
+          <img src={UserPhoto} alt='profile photo'/>
+          <div className='button-upload-container'>
+            <IconButton className='upload-profile-button' color='primary' aria-label='upload picture' component='label'>
+              <input hidden accept='image/*' type='file'/>
               <PhotoCamera />
             </IconButton>
           </div>
         </div>
-        <div className="profile-data">
+        <div className='profile-data'>
           <h4>{data.apellidoNombre}</h4>
           <p>{data.empresaOrganismo}</p>
           <p>DNI: <span>{data.documento}</span></p>
         </div>
       </div>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="Editar">
-          <Tab label="Acreditacion" {...a11yProps(0)} />
-          <Tab label="Habilitaciones" {...a11yProps(1)} />
-          <Tab label="Documentación" {...a11yProps(2)} />
-          <Tab label="Bienes personales" {...a11yProps(3)} />
-          <Tab label="Huellas dactilares" {...a11yProps(4)} />
-          <Tab label="Accesos" {...a11yProps(5)} />
-          <Tab label="Eventos" {...a11yProps(6)} />
+        <Tabs value={value} onChange={handleChange} aria-label='Editar'>
+          <Tab label='Acreditacion' {...a11yProps(0)} />
+          <Tab label='Habilitaciones' {...a11yProps(1)} />
+          <Tab label='Documentación' {...a11yProps(2)} />
+          <Tab label='Bienes personales' {...a11yProps(3)} />
+          <Tab label='Huellas dactilares' {...a11yProps(4)} />
+          <Tab label='Accesos' {...a11yProps(5)} />
+          <Tab label='Eventos' {...a11yProps(6)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

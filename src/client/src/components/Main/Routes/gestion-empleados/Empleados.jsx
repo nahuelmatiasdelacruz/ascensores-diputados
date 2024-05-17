@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import * as XLSX from "xlsx";
+import * as XLSX from 'xlsx';
 import 'dayjs/locale/es';
-import { MUIIcons, MUIButtons, MUIDisplay, MUITools, MUILayout, MUINavigation, MUIInputs } from "../../../../helpers/MaterialImports";
 import { GridToolbarContainer,
-    GridToolbarExportContainer,
-    GridCsvExportMenuItem,
-    useGridApiContext,
-    gridFilteredSortedRowIdsSelector,
-    gridVisibleColumnFieldsSelector, } from '@mui/x-data-grid';
-import { stylesModal } from "../../../../styles/customStyles";
-import TabsContainer from "./Tabs/TabsContainer";
-import axios from "axios";
-import loadingCircle from "../../../../img/loadingCircle.gif";
-import { server } from "../../../../helpers/constants";
-import StepOne from "./AddSteps/StepOne";
-import StepTwo from "./AddSteps/StepTwo";
-import StepThree from "./AddSteps/StepThree";
+  GridToolbarExportContainer,
+  GridCsvExportMenuItem,
+  useGridApiContext,
+  gridFilteredSortedRowIdsSelector,
+  gridVisibleColumnFieldsSelector,
+  Stack,
+  Chip, 
+  IconButton, 
+  EditIcon, 
+  DeleteIcon, 
+  MenuItem, PeopleIcon, PersonAddIcon, Modal, Box, Stepper, Step, StepLabel, Typography, StepContent, Button, Paper, FormControl, OutlinedInput, InputAdornment, SearchIcon, DataGrid, esES, SyncIcon, AddIcon, ToggleButtonGroup, ToggleButton } from '../../../';
+import { stylesModal } from '../../../../styles/customStyles';
+import TabsContainer from './Tabs/TabsContainer';
+import axios from 'axios';
+import loadingCircle from '../../../../img/loadingCircle.gif';
+import { server } from '../../../../helpers/constants';
+import StepOne from './AddSteps/StepOne';
+import StepTwo from './AddSteps/StepTwo';
+import StepThree from './AddSteps/StepThree';
 
 const Empleados = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -38,15 +43,15 @@ const Empleados = () => {
     const [loadingSync,setLoadingSync] = useState(false);
     const [empleados,setEmpleados] = useState([]);
     const [empleadosFiltrados,setEmpleadosFiltrados] = useState([]);
-    const [filtroGeneral,setFiltroGeneral] = useState("");
-    const [filtro,setFiltro] = useState("ACTIVO");
+    const [filtroGeneral,setFiltroGeneral] = useState('');
+    const [filtro,setFiltro] = useState('ACTIVO');
     const [modalConfirmarSalir,setModalConfirmarSalir] = useState(false);
     const handleChangeFiltro = async (e,nuevoFiltro) => {
         setFiltro(nuevoFiltro);
     }
     const checkEmptyStepOne = () => {
-        if(datosNuevoEmpleado.nombre === "" || datosNuevoEmpleado.apellido === "" || datosNuevoEmpleado.documento === "" || datosNuevoEmpleado.nombre === undefined || datosNuevoEmpleado.apellido === undefined || datosNuevoEmpleado.documento === undefined){
-            console.log("Incomplete");
+        if(datosNuevoEmpleado.nombre === '' || datosNuevoEmpleado.apellido === '' || datosNuevoEmpleado.documento === '' || datosNuevoEmpleado.nombre === undefined || datosNuevoEmpleado.apellido === undefined || datosNuevoEmpleado.documento === undefined){
+            console.log('Incomplete');
             return false;
         }else{
             return true;
@@ -66,14 +71,14 @@ const Empleados = () => {
         if(activeStep === 0){
             const stepOne = checkEmptyStepOne();
             if(!stepOne){
-                toast.error("Los campos \nNOMBRE, \nAPELLIDO, \nDOCUMENTO, \nTIPO, \nSEXO son obligatorios");
+                toast.error('Los campos \nNOMBRE, \nAPELLIDO, \nDOCUMENTO, \nTIPO, \nSEXO son obligatorios');
                 return;
             }
         }
         if(activeStep === 1){
             const stepThree = checkEmptyStepTwo();
             if(!stepThree){
-                toast.error("Complete los cambios de habilitación obligatorios:\n \nFecha inicio\nTipo\nSector");
+                toast.error('Complete los cambios de habilitación obligatorios:\n \nFecha inicio\nTipo\nSector');
                 return;
             }
         }
@@ -107,13 +112,13 @@ const Empleados = () => {
     }
     const confirmAdd = async() => {
         try{
-            const result = await axios.post(server+"/api/empleados",datosNuevoEmpleado);
+            const result = await axios.post(server+'/api/empleados',datosNuevoEmpleado);
             toast.success(`Se ha agregado correctamente al empleado: ${datosNuevoEmpleado.nombre} ${datosNuevoEmpleado.apellido}`);
             setDatosNuevoEmpleado({
                 tipo_doc: 1,
                 sexo_id: 1,
             });
-            await getEmpleadosFiltrados("ACTIVO");
+            await getEmpleadosFiltrados('ACTIVO');
             return {
                 id: result.data.id
             };
@@ -156,7 +161,7 @@ const Empleados = () => {
             await getEmpleadosFiltrados(filtro);
             setSelected({});
             setOpenModalBorrar(false);
-            toast.success("Se ha borrado el empleado correctamente");
+            toast.success('Se ha borrado el empleado correctamente');
         }catch(e){
             toast.error(`Hubo un error al borrar el empleado: ${e.message}`);
         }
@@ -171,68 +176,68 @@ const Empleados = () => {
     }
     const getColor = (estado) => {
         switch(estado){
-            case "ACTIVO":
-                return "success";
-            case "PRECARGA":
-                return "warning";
-            case "INACTIVO":
-                return "error";
+            case 'ACTIVO':
+                return 'success';
+            case 'PRECARGA':
+                return 'warning';
+            case 'INACTIVO':
+                return 'error';
             default:
-                return "primary";
+                return 'primary';
         }
     }
     const steps = [
         {
-          label: "Datos básicos",
+          label: 'Datos básicos',
           description: `Por favor, complete los datos básicos del nuevo empleado`,
           component: <StepOne datos={datosNuevoEmpleado} setDatos={setDatosNuevoEmpleado}/>
         },
         {
-          label: "Habilitación",
-          description: "Complete la información para habilitar al empleado",
+          label: 'Habilitación',
+          description: 'Complete la información para habilitar al empleado',
           component: <StepTwo datos={datosNuevoEmpleado} setDatos={setDatosNuevoEmpleado}/>
         },
         {
-          label: "Foto de perfil",
+          label: 'Foto de perfil',
           description: `Para finalizar, seleccione una foto de perfil. Recuerde que la foto podrá ser utilizada si lo desea, como identificador facial`,
           component: <StepThree datos={datosNuevoEmpleado} setDatos={setDatosNuevoEmpleado}/>
         },
     ];
     const gridColumns = [
-        {field: "documento", headerName: "Documento", width: 130},
-        {field: "apellido",headerName:"Apellido", width: 200},
-        {field: "nombre",headerName: "Nombre", width: 200},
-        {field: "periodo_legislativo", headerName: "Periodo", width: 120},
-        {field: "habilitacion_tipo", headerName: "Tipo", width: 250},
-        {field: "sector", headerName: "Estructura", width: 320},
-        {field: "cantidad_datos_bio", headerName: "Huellas", width: 140, renderCell: (params)=>{
-             if(params.row.cantidad_datos_bio === "0"){
-                return "SIN DATOS";
+        {field: 'documento', headerName: 'Documento', width: 130},
+        {field: 'apellido',headerName:'Apellido', width: 200},
+        {field: 'nombre',headerName: 'Nombre', width: 200},
+        {field: 'periodo_legislativo', headerName: 'Periodo', width: 120},
+        {field: 'habilitacion_tipo', headerName: 'Tipo', width: 250},
+        {field: 'sector', headerName: 'Estructura', width: 320},
+        {field: 'cantidad_datos_bio', headerName: 'Huellas', width: 140, renderCell: (params)=>{
+             if(params.row.cantidad_datos_bio === '0'){
+                return 'SIN DATOS';
              }else{
                 return params.row.cantidad_datos_bio;
              }
         }},
-        {field: "estado", disableColumnFilter: false, disableColumnMenu: false, headerName: "Estado",renderCell: (params)=>{
+        {field: 'estado', disableColumnFilter: false, disableColumnMenu: false, headerName: 'Estado',renderCell: (params)=>{
             return(
-                <MUILayout.Stack direction="row" spacing={1}>
-                    <MUIDisplay.Chip label={params.row.estado} color={getColor(params.row.estado)} size="small"/>
-                </MUILayout.Stack>
+                <Stack direction='row' spacing={1}>
+                    <Chip label={params.row.estado} color={getColor(params.row.estado)} size='small'/>
+                </Stack>
             )
         },valueGetter: (params)=>params.row.estado, sortable: true},
-        {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Acciones",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'actions',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Acciones',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <MUILayout.Stack direction="row" spacing={1}>
-                    <MUIButtons.IconButton onClick={(e)=>{
+                <Stack direction='row' spacing={1}>
+                    <IconButton onClick={(e)=>{
                         e.stopPropagation();
-                        editarEmpleado(params.row)}} color="success" aria-label="edit">
-                        <MUIIcons.EditIcon/>
-                    </MUIButtons.IconButton>
-                    <MUIButtons.IconButton onClick={(e)=>{
+                        editarEmpleado(params.row)}} color='success' aria-label='edit'>
+                        <EditIcon/>
+                    </IconButton>
+                    <IconButton onClick={(e)=>{
                         e.stopPropagation();
-                        borrarEmpleado(params.row)}} color="error" aria-label="delete">
-                    <MUIIcons.DeleteIcon/>
-                    </MUIButtons.IconButton>
-                </MUILayout.Stack>
+                        borrarEmpleado(params.row)}} color='error' aria-label='delete'>
+                    <DeleteIcon/>
+                    </IconButton>
+                </Stack>
             )
         }},
     ]
@@ -253,7 +258,7 @@ const Empleados = () => {
         setLoadingSync(true);
         try{
             await axios.post(`${server}/api/huellas/syncall`);
-            toast.success("Ha comenzado la sincronización de dispositivos, aguarde unos minutos para ver los cambios");
+            toast.success('Ha comenzado la sincronización de dispositivos, aguarde unos minutos para ver los cambios');
             setLoadingSync(false);
         }catch(e){
             toast.error(`Hubo un error al sincronizar los usuarios y dispositivos: \n\n${e.message}`);
@@ -305,14 +310,14 @@ const Empleados = () => {
         const apiRef = useGridApiContext();
         const { hideMenu } = props;
         return (
-          <MUIInputs.MenuItem
+          <MenuItem
             onClick={() => {
               getExcel(apiRef);
               hideMenu?.();
             }}
           >
             Exportar EXCEL
-          </MUIInputs.MenuItem>
+          </MenuItem>
         );
     }
     const csvOptions = { delimiter: ';' };
@@ -335,7 +340,7 @@ const Empleados = () => {
         getEmpleadosFiltrados(filtro);
     },[filtro]);
     useEffect(()=>{
-        if(filtroGeneral!==""){
+        if(filtroGeneral!==''){
             const filtrados = empleados.filter((empleado)=>{
                 const {nombre, apellido, documento} = empleado;
                 const filtroMinusculas = filtroGeneral.toLowerCase();
@@ -352,126 +357,126 @@ const Empleados = () => {
     return(
         <>
             <Toaster/>
-            <div className="content-header">
-                <MUIIcons.PeopleIcon sx={{fontSize: 40}}/>
+            <div className='content-header'>
+                <PeopleIcon sx={{fontSize: 40}}/>
                 <h3>Empleados</h3>
             </div>
-            <MUITools.Modal open={modalConfirmarSalir} onClose={handleCloseConfirmarSalir}>
-                <MUILayout.Box sx={{...stylesModal,width: "40%"}}>
-                    <h4 className="info-title">¿Desea cancelar el agregado del nuevo empleado? Se perderan todos los cambios</h4>
-                    <MUILayout.Stack direction="row" spacing={5} marginTop="30px" justifyContent="center">
-                        <MUIButtons.Button onClick={()=>{
+            <Modal open={modalConfirmarSalir} onClose={handleCloseConfirmarSalir}>
+                <Box sx={{...stylesModal,width: '40%'}}>
+                    <h4 className='info-title'>¿Desea cancelar el agregado del nuevo empleado? Se perderan todos los cambios</h4>
+                    <Stack direction='row' spacing={5} marginTop='30px' justifyContent='center'>
+                        <Button onClick={()=>{
                             handleCloseConfirmarSalir();
                             handleCloseAdd();
-                        }} variant="outlined" color="success">Si</MUIButtons.Button>
-                        <MUIButtons.Button onClick={handleCloseConfirmarSalir} variant="outlined" color="error">No</MUIButtons.Button>
-                    </MUILayout.Stack>
-                </MUILayout.Box>
-            </MUITools.Modal>
+                        }} variant='outlined' color='success'>Si</Button>
+                        <Button onClick={handleCloseConfirmarSalir} variant='outlined' color='error'>No</Button>
+                    </Stack>
+                </Box>
+            </Modal>
 
             {/* Añadir empleado */}
-            <MUITools.Modal open={modalAdd} onClose={askIfExit} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-                <MUILayout.Box sx={{...stylesModal,width: "50%"}}>
-                    <MUILayout.Box sx={{display: "flex",alignItems: "center", width: "20%",justifyContent: "space-around"}}>
-                        <MUIIcons.PersonAddIcon fontSize="large" color="primary"/>
-                        <h4 style={{color: "#1282a2ff"}}>Nuevo empleado</h4>
-                    </MUILayout.Box>
-                    <MUILayout.Box sx={{ width: "98%"}}>
-                      <MUINavigation.Stepper activeStep={activeStep} orientation="vertical">
+            <Modal open={modalAdd} onClose={askIfExit} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+                <Box sx={{...stylesModal,width: '50%'}}>
+                    <Box sx={{display: 'flex',alignItems: 'center', width: '20%',justifyContent: 'space-around'}}>
+                        <PersonAddIcon fontSize='large' color='primary'/>
+                        <h4 style={{color: '#1282a2ff'}}>Nuevo empleado</h4>
+                    </Box>
+                    <Box sx={{ width: '98%'}}>
+                      <Stepper activeStep={activeStep} orientation='vertical'>
                         {steps.map((step, index) => (
-                          <MUINavigation.Step key={step.label}>
-                            <MUINavigation.StepLabel optional={index === 2 ? (<MUIDisplay.Typography variant="caption">Ultimo paso: Cargue la foto de perfil</MUIDisplay.Typography>) : null}>
+                          <Step key={step.label}>
+                            <StepLabel optional={index === 2 ? (<Typography variant='caption'>Ultimo paso: Cargue la foto de perfil</Typography>) : null}>
                               {step.label}
-                            </MUINavigation.StepLabel>
-                            <MUINavigation.StepContent>
+                            </StepLabel>
+                            <StepContent>
                               {step.component}
-                              <MUILayout.Box sx={{ mb: 2 }}>
+                              <Box sx={{ mb: 2 }}>
                                 <div>
-                                  <MUIButtons.Button variant="outlined" onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
-                                    {index === steps.length - 1 ? "Finalizar" : "Continuar"}
-                                  </MUIButtons.Button>
-                                  <MUIButtons.Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>Volver</MUIButtons.Button>
+                                  <Button variant='outlined' onClick={handleNext} sx={{ mt: 1, mr: 1 }}>
+                                    {index === steps.length - 1 ? 'Finalizar' : 'Continuar'}
+                                  </Button>
+                                  <Button disabled={index === 0} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>Volver</Button>
                                 </div>
-                              </MUILayout.Box>
-                            </MUINavigation.StepContent>
-                          </MUINavigation.Step>
+                              </Box>
+                            </StepContent>
+                          </Step>
                         ))}
-                      </MUINavigation.Stepper>
+                      </Stepper>
                       {activeStep === steps.length && (
-                        <MUITools.Paper square elevation={0} sx={{ p: 3 }}>
-                          <MUIDisplay.Typography>
+                        <Paper square elevation={0} sx={{ p: 3 }}>
+                          <Typography>
                             Se ha cargado correctamente el empleado
-                          </MUIDisplay.Typography>
-                          <MUIButtons.Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+                          </Typography>
+                          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
                             Cargar otro empleado
-                          </MUIButtons.Button>
-                        </MUITools.Paper>
+                          </Button>
+                        </Paper>
                       )}
-                    </MUILayout.Box>
-                </MUILayout.Box>
-            </MUITools.Modal>
+                    </Box>
+                </Box>
+            </Modal>
 
             {/* Borrar empleado */}
-            <MUITools.Modal open={modalBorrar} onClose={handleCloseBorrar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-                <MUILayout.Box sx={{...stylesModal,width: "30%"}}>
-                    <MUILayout.Box sx={{display: "flex",alignItems: "center", width: "100%",justifyContent: "space-around"}}>
-                        <h4 style={{color: "#1282a2ff"}}>¿Está seguro que desea inhabilitar el empleado {selected?.nombre} {selected?.apellido}?</h4>
-                    </MUILayout.Box>
-                    <MUILayout.Box sx={{ width: "98%"}}>
-                        <MUILayout.Stack direction="row" spacing={5} marginTop="30px" justifyContent="center">
-                            <MUIButtons.Button onClick={confirmarBorrado} color="success" variant="outlined">Confirmar</MUIButtons.Button>
-                            <MUIButtons.Button onClick={handleCloseBorrar} color="error" variant="outlined">Cancelar</MUIButtons.Button>
-                        </MUILayout.Stack>
-                    </MUILayout.Box>
-                </MUILayout.Box>
-            </MUITools.Modal>
+            <Modal open={modalBorrar} onClose={handleCloseBorrar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+                <Box sx={{...stylesModal,width: '30%'}}>
+                    <Box sx={{display: 'flex',alignItems: 'center', width: '100%',justifyContent: 'space-around'}}>
+                        <h4 style={{color: '#1282a2ff'}}>¿Está seguro que desea inhabilitar el empleado {selected?.nombre} {selected?.apellido}?</h4>
+                    </Box>
+                    <Box sx={{ width: '98%'}}>
+                        <Stack direction='row' spacing={5} marginTop='30px' justifyContent='center'>
+                            <Button onClick={confirmarBorrado} color='success' variant='outlined'>Confirmar</Button>
+                            <Button onClick={handleCloseBorrar} color='error' variant='outlined'>Cancelar</Button>
+                        </Stack>
+                    </Box>
+                </Box>
+            </Modal>
 
              {/* Editar empleado */}
-            <MUITools.Modal open={modalEditar} onClose={handleCloseEditar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={modalEditar} onClose={handleCloseEditar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <React.Fragment>
                     <TabsContainer handleCloseEditar={handleCloseEditar} setData={setSelected} data={selected}/>
                 </React.Fragment>
-            </MUITools.Modal>
-            <MUITools.Modal open={modalLoading} onClose={handleCloseModalLoading}>
-                <MUILayout.Box sx={stylesModal}>
-                    <img style={{width: "60%"}}src={loadingCircle} alt="Cargando..."/>
-                </MUILayout.Box>
-            </MUITools.Modal>
-            <MUIInputs.FormControl sx={{width: '25ch', marginBottom: "15px" }}>
-              <MUIInputs.OutlinedInput size="small" placeholder="Buscar.." id="filled-adornment-password" type="text" onChange={handleChangeAllFilter}
+            </Modal>
+            <Modal open={modalLoading} onClose={handleCloseModalLoading}>
+                <Box sx={stylesModal}>
+                    <img style={{width: '60%'}}src={loadingCircle} alt='Cargando...'/>
+                </Box>
+            </Modal>
+            <FormControl sx={{width: '25ch', marginBottom: '15px' }}>
+              <OutlinedInput size='small' placeholder='Buscar..' id='filled-adornment-password' type='text' onChange={handleChangeAllFilter}
                 endAdornment={
-                  <MUIInputs.InputAdornment position="end">
-                    <MUIButtons.IconButton disabled edge="end">
-                        <MUIIcons.SearchIcon/>
-                    </MUIButtons.IconButton>
-                  </MUIInputs.InputAdornment>
+                  <InputAdornment position='end'>
+                    <IconButton disabled edge='end'>
+                        <SearchIcon/>
+                    </IconButton>
+                  </InputAdornment>
                 }
               />
-            </MUIInputs.FormControl>
-            <MUILayout.DataGrid
+            </FormControl>
+            <DataGrid
                 slots={{toolbar: CustomToolbar}}
                 disableRowSelectionOnClick={true}
                 onRowClick={editarEmpleadoRow}
-                sx={{height: "70%"}}
+                sx={{height: '70%'}}
                 loading={loading}
                 rows={empleadosFiltrados}
                 columns={gridColumns}
                 autoPageSize
                 rowHeight={55}
-                localeText={MUILayout.esES.components.MuiDataGrid.defaultProps.localeText}
+                localeText={esES.components.MuiDataGrid.defaultProps.localeText}
             />
-            <MUILayout.Box sx={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "20px"}}>
-                <MUIButtons.Button onClick={addEmpleado} variant="outlined" startIcon={<MUIIcons.AddIcon/>}>Añadir empleado</MUIButtons.Button>
-                <MUILayout.Box>
-                    <MUIButtons.ToggleButtonGroup disabled={loading} size="small" value={filtro} exclusive onChange={handleChangeFiltro} aria-label="Filtro">
-                      <MUIButtons.ToggleButton color="success" value="ACTIVO">Activos</MUIButtons.ToggleButton>
-                      <MUIButtons.ToggleButton color="error" value="INACTIVO">Inactivos</MUIButtons.ToggleButton>
-                      <MUIButtons.ToggleButton color="warning" value="PRECARGA">Precarga</MUIButtons.ToggleButton>
-                      <MUIButtons.ToggleButton color="primary" value="ALL">Todos</MUIButtons.ToggleButton>
-                    </MUIButtons.ToggleButtonGroup>
-                    <MUIButtons.Button onClick={syncAll} disabled={loadingSync} sx={{marginLeft: "25px"}} startIcon={<MUIIcons.SyncIcon/>} variant="contained" color="secondary">Sync</MUIButtons.Button>
-                </MUILayout.Box>
-            </MUILayout.Box>
+            <Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px'}}>
+                <Button onClick={addEmpleado} variant='outlined' startIcon={<AddIcon/>}>Añadir empleado</Button>
+                <Box>
+                    <ToggleButtonGroup disabled={loading} size='small' value={filtro} exclusive onChange={handleChangeFiltro} aria-label='Filtro'>
+                      <ToggleButton color='success' value='ACTIVO'>Activos</ToggleButton>
+                      <ToggleButton color='error' value='INACTIVO'>Inactivos</ToggleButton>
+                      <ToggleButton color='warning' value='PRECARGA'>Precarga</ToggleButton>
+                      <ToggleButton color='primary' value='ALL'>Todos</ToggleButton>
+                    </ToggleButtonGroup>
+                    <Button onClick={syncAll} disabled={loadingSync} sx={{marginLeft: '25px'}} startIcon={<SyncIcon/>} variant='contained' color='secondary'>Sync</Button>
+                </Box>
+            </Box>
         </>
     )
 }

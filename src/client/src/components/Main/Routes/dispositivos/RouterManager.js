@@ -1,6 +1,6 @@
-import Grupos from "./Grupos";
-import Dispositivos from "./Dispositivos";
-import Marcaciones from "./Marcaciones";
+import Grupos from './Grupos';
+import Dispositivos from './Dispositivos';
+import Marcaciones from './Marcaciones';
 
 const DispositivosRoutes = {
     Grupos,

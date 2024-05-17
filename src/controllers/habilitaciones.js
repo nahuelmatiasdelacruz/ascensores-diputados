@@ -1,10 +1,10 @@
 const dayjs = require('dayjs');
-const { knex } = require("../helpers/knexConfig");
+const { knex } = require('../helpers/knexConfig');
 const { syncDevices } = require('./controllerHelpers');
 const { quitarEmpleadoEquipos } = require('../helpers/generalHelpers');
 const setEstado = (statusHabilitacion,statusRegistro) => {
   if(!statusRegistro){
-    return "INACTIVO";
+    return 'INACTIVO';
   }else{
     return statusHabilitacion;
   }
@@ -15,16 +15,16 @@ const getToday = () => {
     .hour(23)
     .minute(59)
     .second(59)
-    .format("YYYY-MM-DDTHH:mm:ss");
+    .format('YYYY-MM-DDTHH:mm:ss');
   return today;
 }
 const isActiveHabilitacion = async (id) => {
-  const result = await knex.select("*").from("sgp.vw_habilitaciones").where({
+  const result = await knex.select('*').from('sgp.vw_habilitaciones').where({
     registro_activo: true,
     empleado_id: id
   });
   if(result.length > 0){
-    const datosFiltrados = result.filter((habilitacion)=>habilitacion.estado==="ACTIVO" || habilitacion.estado === "PRECARGA");
+    const datosFiltrados = result.filter((habilitacion)=>habilitacion.estado==='ACTIVO' || habilitacion.estado === 'PRECARGA');
     if(datosFiltrados.length > 0){
       return true;
     }else{
@@ -36,9 +36,9 @@ const isActiveHabilitacion = async (id) => {
 }
 const getHabilitaciones = async (req,res) => {
     const {id} = req.params;
-    const data = await knex.select("*").from("sgp.vw_habilitaciones").where({
+    const data = await knex.select('*').from('sgp.vw_habilitaciones').where({
       empleado_id: id
-    }).orderByRaw("CASE WHEN fecha_hasta IS NULL THEN 0 ELSE 1 END, fecha_hasta DESC");
+    }).orderByRaw('CASE WHEN fecha_hasta IS NULL THEN 0 ELSE 1 END, fecha_hasta DESC');
     if(data.length > 0){
       const parsed = data.map((habilitacion)=>{
         return {
@@ -57,14 +57,14 @@ const getHabilitaciones = async (req,res) => {
 const inhabilitarEmpleado = async (req,res) => {
   try{
     const id = req.params.id;
-    await knex("sgp.habilitaciones").where({empleado_id: id}).update({
+    await knex('sgp.habilitaciones').where({empleado_id: id}).update({
       fecha_hasta: getToday()
     })
     await syncDevices(id);
-    res.status(200).json({msg: "Se ha inhabilitado correctamente al empleado"});
+    res.status(200).json({msg: 'Se ha inhabilitado correctamente al empleado'});
   }catch(e){
     console.log(e);
-    res.status(500).json({msg: "Hubo un error al inhabilitar el empleado"});
+    res.status(500).json({msg: 'Hubo un error al inhabilitar el empleado'});
   }
 }
 const formatDateOut = (date) => {
@@ -77,7 +77,7 @@ const formatDateOut = (date) => {
 }
 const formatDateIn = (date) => {
   if(date){
-    const dateFormatted = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
+    const dateFormatted = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
     return dateFormatted;
   }else{
     return null;
@@ -86,7 +86,7 @@ const formatDateIn = (date) => {
 const addHabilitacion = async (req,res) => {
   const tieneHabilitacion = await isActiveHabilitacion(req.body.empleado_id);
   if(tieneHabilitacion){
-    return res.status(400).json({msg: "El empleado ya tiene una habilitación activa.\nDeshabilitela o eliminela para poder agregar otra"});
+    return res.status(400).json({msg: 'El empleado ya tiene una habilitación activa.\nDeshabilitela o eliminela para poder agregar otra'});
   }
   try{
     await knex.raw(`
@@ -113,19 +113,19 @@ const addHabilitacion = async (req,res) => {
       p_periodo_legislativo_id: req.body.periodo_legislativo || 1,
       p_turno_noche: req.body.turno_noche || false
     });
-    return res.status(200).json({msg: "Habilitación agregada con éxito"});
+    return res.status(200).json({msg: 'Habilitación agregada con éxito'});
   }catch(e){
     console.log(e.message);
-    return res.status(400).json({msg: "Error al agregar la habilitación", error: e.message});
+    return res.status(400).json({msg: 'Error al agregar la habilitación', error: e.message});
   }
 }
 const updateHabilitacion = async (req,res) => {
   try{
-    const habilitacion = await knex.select("*").from("sgp.vw_habilitaciones").where("habilitacion_id", req.body.habilitacion_id);
+    const habilitacion = await knex.select('*').from('sgp.vw_habilitaciones').where('habilitacion_id', req.body.habilitacion_id);
     const fechaHasta = req.body.fechaHasta ? dayjs(req.body.fechaHasta) : null;
     const hoy = dayjs();
     if((fechaHasta > hoy || !fechaHasta) && habilitacion[0].registro_activo === false) {
-      await knex("sgp.habilitaciones").update({registro_activo: true}).where("habilitacion_id", req.body.habilitacion_id);
+      await knex('sgp.habilitaciones').update({registro_activo: true}).where('habilitacion_id', req.body.habilitacion_id);
     }
     await knex.raw(`call sgp.sp_habilitacion_upd(
       :p_habilitacion_id,
@@ -149,20 +149,20 @@ const updateHabilitacion = async (req,res) => {
     p_periodo_legislativo_id: req.body.periodo_legislativo || 1
   });
   await syncDevices(habilitacion[0].empleado_id);
-  res.status(200).json({msg: "ok"});
+  res.status(200).json({msg: 'ok'});
   }catch(e){
     console.log(e.message);
-    res.status(400).json({msg: "Hubo un error al actualizar la habilitación: ", error: e.message});
+    res.status(400).json({msg: 'Hubo un error al actualizar la habilitación: ', error: e.message});
   }
 }
 const deleteHabilitacion = async (req,res) => {
   try{
-    const user = await knex.select("*").from("sgp.vw_habilitaciones").where({habilitacion_id: req.params.id});
-    await knex("sgp.habilitaciones").where("habilitacion_id","=",req.params.id).update({fecha_hasta: getToday()});
+    const user = await knex.select('*').from('sgp.vw_habilitaciones').where({habilitacion_id: req.params.id});
+    await knex('sgp.habilitaciones').where('habilitacion_id','=',req.params.id).update({fecha_hasta: getToday()});
     await quitarEmpleadoEquipos(user[0].empleado_id);
-    res.status(200).json({msg: "Habilitacion eliminada con éxito"});
+    res.status(200).json({msg: 'Habilitacion eliminada con éxito'});
   }catch(e){
-    res.status(400).json({msg: "Error al borrar la habilitacion", error: e.message});
+    res.status(400).json({msg: 'Error al borrar la habilitacion', error: e.message});
   }
 }
 const habilitacionesController = {

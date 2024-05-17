@@ -1,5 +1,5 @@
-import Enroladores from "./Enroladores";
-import Equipos from "./Equipos";
+import Enroladores from './Enroladores';
+import Equipos from './Equipos';
 
 const MolinetesRoutes = {
     Enroladores,

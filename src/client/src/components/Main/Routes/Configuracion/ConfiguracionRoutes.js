@@ -1,4 +1,4 @@
-import Periodos from "./Periodos";
+import Periodos from './Periodos';
 
 const ConfiguracionRoutes = {
     Periodos,

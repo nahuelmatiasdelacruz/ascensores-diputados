@@ -1,7 +1,7 @@
 export const stylesModal = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     position: 'absolute',
     top: '50%',
     left: '50%',

@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Box from '@mui/material/Box';
-import { DataGrid, esES } from '@mui/x-data-grid';
-import Modal from "@mui/material/Modal";
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import { stylesModal } from "../../../../styles/customStyles";
-import EditTabs from "./EditTabs";
+import React, { useEffect, useState } from 'react';
+import {Box,DataGrid,esES,Modal,Stack,IconButton,Button,DeleteIcon,EditIcon,BadgeRoundedIcon} from '../../../';
+import { stylesModal } from '../../../../styles/customStyles';
+import EditTabs from './EditTabs';
 
 const Acreditaciones = () => {
     const [selected,setSelectedRow] = useState({});
@@ -34,19 +26,19 @@ const Acreditaciones = () => {
         setOpenAcreditacion(true);
     }
     const gridColumns = [
-        {field: "apellidoNombre", headerName: "Apellido y Nombre", width: 200},
-        {field: "documento", headerName: "Documento", width: 200},
-        {field: "tipoHabilitacion",headerName: "Tipo Habilitacion", width: 200},
-        {field: "empresaOrganismo", headerName: "Empresa / Organismo", width: 230},
-        {field: "fechaHoraDesde",headerName: "Fecha y Hora: Desde", width: 250},
-        {field: "fechaHoraHasta",headerName: "Fecha y Hora: Hasta", width: 250},
-        {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Acciones",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'apellidoNombre', headerName: 'Apellido y Nombre', width: 200},
+        {field: 'documento', headerName: 'Documento', width: 200},
+        {field: 'tipoHabilitacion',headerName: 'Tipo Habilitacion', width: 200},
+        {field: 'empresaOrganismo', headerName: 'Empresa / Organismo', width: 230},
+        {field: 'fechaHoraDesde',headerName: 'Fecha y Hora: Desde', width: 250},
+        {field: 'fechaHoraHasta',headerName: 'Fecha y Hora: Hasta', width: 250},
+        {field: 'actions',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Acciones',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <Stack direction="row" spacing={1}>
-                    <IconButton onClick={(e)=>{editarAcreditacion(e,params.row)}} color="success" aria-label="edit">
+                <Stack direction='row' spacing={1}>
+                    <IconButton onClick={(e)=>{editarAcreditacion(e,params.row)}} color='success' aria-label='edit'>
                         <EditIcon/>
                     </IconButton>
-                    <IconButton onClick={(e)=>{borrarAcreditacion(e,params.row)}} color="error" aria-label="delete">
+                    <IconButton onClick={(e)=>{borrarAcreditacion(e,params.row)}} color='error' aria-label='delete'>
                         <DeleteIcon/>
                     </IconButton>
                 </Stack>
@@ -58,27 +50,27 @@ const Acreditaciones = () => {
     },[])
     return(
         <>  
-            <div className="content-header">
+            <div className='content-header'>
                 <BadgeRoundedIcon sx={{fontSize: 40}}/>
                 <h3>Acreditaciones</h3>
             </div>
-            <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <h1 className="confirmation-text">¿Confirma que desea borrar las acreditaciones de: <span>{selected?.apellidoNombre}</span>?</h1>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button color="success" variant="outlined">Si</Button>
-                        <Button color="error" variant="outlined">No</Button>
+                    <h1 className='confirmation-text'>¿Confirma que desea borrar las acreditaciones de: <span>{selected?.apellidoNombre}</span>?</h1>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button color='success' variant='outlined'>Si</Button>
+                        <Button color='error' variant='outlined'>No</Button>
                     </Stack>
                 </Box>
             </Modal>
-            <Modal open={openAcreditacion} onClose={handleCloseAcreditacion} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={openAcreditacion} onClose={handleCloseAcreditacion} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <React.Fragment>
                     <EditTabs data={selected}/>
                 </React.Fragment>
             </Modal>
             <DataGrid
                 disableRowSelectionOnClick={true}
-                sx={{height: "80%"}}
+                sx={{height: '80%'}}
                 loading={loading}
                 rows={acreditaciones}
                 columns={gridColumns}
@@ -88,5 +80,4 @@ const Acreditaciones = () => {
         </>
     )
 }
-
 export default Acreditaciones;

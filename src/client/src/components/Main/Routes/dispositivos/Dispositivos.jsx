@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import ElevatorRoundedIcon from '@mui/icons-material/ElevatorRounded';
-import axios from "axios";
-import { DataGrid, esES } from '@mui/x-data-grid';
+import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';import { esES } from '@mui/x-data-grid/locales';
 import Box from '@mui/material/Box';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
-import Modal from "@mui/material/Modal";
+import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import { server } from "../../../../helpers/constants";
+import { server } from '../../../../helpers/constants';
 import toast, { Toaster } from 'react-hot-toast';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Chip from '@mui/material/Chip';
-import { stylesModal } from "../../../../styles/customStyles";
+import { stylesModal } from '../../../../styles/customStyles';
 
 const Dispositivos = () => {
     /* Modal controls */
@@ -31,15 +31,15 @@ const Dispositivos = () => {
     const [dispositivos,setDispositivos] = useState([]);
     const [nuevoDispositivo,setNuevoDispositivo] = useState({
         id: 0,
-        nombre: "",
-        marca: "",
-        tipo: "",
-        modelo: "",
-        nro_serie: "",
-        ip: "",
+        nombre: '',
+        marca: '',
+        tipo: '',
+        modelo: '',
+        nro_serie: '',
+        ip: '',
         puerto: 0,
-        usuario: "",
-        password: ""
+        usuario: '',
+        password: ''
     });
     
     /* Handlers dispositivos */
@@ -89,7 +89,7 @@ const Dispositivos = () => {
     }
     const checkEmpty = () => {
         for(let key in nuevoDispositivo){
-            if(nuevoDispositivo[key] === ""){
+            if(nuevoDispositivo[key] === ''){
                 return true;
             }
         }
@@ -98,7 +98,7 @@ const Dispositivos = () => {
     const confirmarCambios = async () => {
         const isEmpty = checkEmpty();
         if(isEmpty){
-            toast.error("Por favor, complete todos los campos para editar");
+            toast.error('Por favor, complete todos los campos para editar');
             return;
         }
         try{
@@ -107,20 +107,20 @@ const Dispositivos = () => {
             setSelected({});
             setNuevoDispositivo({
                 id: 0,
-                nombre: "",
-                marca: "",
-                tipo: "",
-                modelo: "",
-                nro_serie: "",
-                ip: "",
+                nombre: '',
+                marca: '',
+                tipo: '',
+                modelo: '',
+                nro_serie: '',
+                ip: '',
                 puerto: 0,
-                usuario: "",
-                password: ""
+                usuario: '',
+                password: ''
             });
             setModalEditar(false);
-            toast.success("Se han guardado los cambios correctamente");
+            toast.success('Se han guardado los cambios correctamente');
         }catch(e){
-            toast.error("Hubo un error al editar el dispositivo, contacte el administrador del sistema");
+            toast.error('Hubo un error al editar el dispositivo, contacte el administrador del sistema');
         }
     }
     const closeEditar = () => {
@@ -131,7 +131,7 @@ const Dispositivos = () => {
         setModalBorrar(true);
     }
     const handleBorrar = async () => {
-        const result = await axios.delete(server+"/api/dispositivos/"+selected.equipo_id);
+        const result = await axios.delete(server+'/api/dispositivos/'+selected.equipo_id);
         await getDevices();
         setModalBorrar(false);
     }
@@ -139,7 +139,7 @@ const Dispositivos = () => {
         setModalAdd(true);
     }
     const handleAdd = async () => {
-        const result = await axios.post(server+"/api/dispositivos",nuevoDispositivo);
+        const result = await axios.post(server+'/api/dispositivos',nuevoDispositivo);
         await getDevices();
         handleCloseAdd();
     }
@@ -213,33 +213,33 @@ const Dispositivos = () => {
     }
     /* Configuración de la tabla */
     const gridColumns = [
-        {field: "descripcion", headerName: "Descripción", width: 200},
-        {field: "ip", headerName: "IP", width: 200},
-        {field: "port",headerName: "Puerto", width: 200},
-        {field: "marca",headerName: "Marca", width: 200},
-        {field: "modelo",headerName: "Modelo", width: 200},
-        {filed: "registro_activo",headerName: "Estado", width: 150,renderCell: (params)=>{
+        {field: 'descripcion', headerName: 'Descripción', width: 200},
+        {field: 'ip', headerName: 'IP', width: 200},
+        {field: 'port',headerName: 'Puerto', width: 200},
+        {field: 'marca',headerName: 'Marca', width: 200},
+        {field: 'modelo',headerName: 'Modelo', width: 200},
+        {filed: 'registro_activo',headerName: 'Estado', width: 150,renderCell: (params)=>{
             return(
-                params.row.registro_activo === true ? <Chip label="Activo" color="success" size="small"/> : <Chip label="Inactivo" color="warning" size="small"/>
+                params.row.registro_activo === true ? <Chip label='Activo' color='success' size='small'/> : <Chip label='Inactivo' color='warning' size='small'/>
             )
         }},
-        {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Acciones",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'actions',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Acciones',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <Stack direction="row" spacing={1}>
+                <Stack direction='row' spacing={1}>
                     <IconButton onClick={(e)=>{
                         e.stopPropagation();
-                        sincronizarDispositivo(e,params.row)}} color="error" aria-label="sync">
+                        sincronizarDispositivo(e,params.row)}} color='error' aria-label='sync'>
                         <EditIcon/>
                     </IconButton>
 
                     <IconButton onClick={(e)=>{
                         e.stopPropagation();
-                        editarDispositivo(e,params.row)}} color="success" aria-label="edit">
+                        editarDispositivo(e,params.row)}} color='success' aria-label='edit'>
                         <EditIcon/>
                     </IconButton>
                     <IconButton onClick={(e)=>{
                         e.stopPropagation();
-                        borrarDispositivo(e,params.row)}} color="error" aria-label="delete">
+                        borrarDispositivo(e,params.row)}} color='error' aria-label='delete'>
                         <DeleteIcon/>
                     </IconButton>
                 </Stack>
@@ -249,14 +249,14 @@ const Dispositivos = () => {
     /* DB Read/Write */
     const getDevices = async () => {
         setLoading(true);
-        const devices = await axios.get(server+"/api/dispositivos");
+        const devices = await axios.get(server+'/api/dispositivos');
         const parsed = devices.data.map((device)=>{
             return {
                 ...device,
                 id: device.equipo_id
             }
         })
-        const tipos = await axios.get(server+"/api/dispositivos/tipos_equipos");
+        const tipos = await axios.get(server+'/api/dispositivos/tipos_equipos');
         setTiposEquipos(tipos.data);
         setDispositivos(parsed);
         setLoading(false);
@@ -267,17 +267,17 @@ const Dispositivos = () => {
     return(
         <>
         <Toaster/>
-            <Modal open={modalEditar} onClose={closeEditar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={modalEditar} onClose={closeEditar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <h1 className="confirmation-text">Editar el equipo <span>{selected.descripcion}</span>:</h1>
-                    <Box sx={{display: "flex",flexDirection: "column",justifyContent: "space-between", height: "600px", marginBottom: 4}}>
-                        <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                            <h4 style={{color: "#1282a2ff"}}>Detalle</h4>
-                            <TextField value={nuevoDispositivo?.nombre} onChange={handleChangeNombre} size="small" id="descripcion" label="Nombre" variant="outlined" type="text"/>
-                            <TextField value={nuevoDispositivo?.marca} onChange={handleChangeMarca} size="small" id="marca" label="Marca" variant="outlined" type="text"/>
-                            <TextField value={nuevoDispositivo?.modelo} onChange={handleChangeModelo} size="small" id="modelo" label="Modelo" variant="outlined" type="text"/>
-                            <TextField value={nuevoDispositivo?.nro_serie} onChange={handleChangeSerie} size="small" id="numero-serie" label="Serie" variant="outlined" type="text"/>
-                            <TextField value={nuevoDispositivo?.tipo} onChange={handleChangeTipo} size="small" id="select-tipo" select label="Tipo de equipo">
+                    <h1 className='confirmation-text'>Editar el equipo <span>{selected.descripcion}</span>:</h1>
+                    <Box sx={{display: 'flex',flexDirection: 'column',justifyContent: 'space-between', height: '600px', marginBottom: 4}}>
+                        <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                            <h4 style={{color: '#1282a2ff'}}>Detalle</h4>
+                            <TextField value={nuevoDispositivo?.nombre} onChange={handleChangeNombre} size='small' id='descripcion' label='Nombre' variant='outlined' type='text'/>
+                            <TextField value={nuevoDispositivo?.marca} onChange={handleChangeMarca} size='small' id='marca' label='Marca' variant='outlined' type='text'/>
+                            <TextField value={nuevoDispositivo?.modelo} onChange={handleChangeModelo} size='small' id='modelo' label='Modelo' variant='outlined' type='text'/>
+                            <TextField value={nuevoDispositivo?.nro_serie} onChange={handleChangeSerie} size='small' id='numero-serie' label='Serie' variant='outlined' type='text'/>
+                            <TextField value={nuevoDispositivo?.tipo} onChange={handleChangeTipo} size='small' id='select-tipo' select label='Tipo de equipo'>
                                 {
                                     tiposEquipos.map(tipo=>{
                                         return(
@@ -287,47 +287,47 @@ const Dispositivos = () => {
                                 }
                             </TextField>
                         </Box>
-                        <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                            <h4 style={{color: "#1282a2ff"}}>Conexión</h4>
-                            <TextField value={nuevoDispositivo.ip} onChange={handleChangeIp} size="small" id="ip" label="IP" variant="outlined" type="text"/>
-                            <TextField value={nuevoDispositivo.puerto} onChange={handleChangePuerto} size="small" id="puerto" label="Puerto" variant="outlined" type="number"/>
+                        <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                            <h4 style={{color: '#1282a2ff'}}>Conexión</h4>
+                            <TextField value={nuevoDispositivo.ip} onChange={handleChangeIp} size='small' id='ip' label='IP' variant='outlined' type='text'/>
+                            <TextField value={nuevoDispositivo.puerto} onChange={handleChangePuerto} size='small' id='puerto' label='Puerto' variant='outlined' type='number'/>
                         </Box>
-                        <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                            <h4 style={{color: "#1282a2ff"}}>Acceso</h4>
-                            <TextField value={nuevoDispositivo.usuario} onChange={handleChangeUsuario} size="small" id="usuario" label="Usuario" variant="outlined" type="text"/>
-                            <TextField value={nuevoDispositivo.password} onChange={handleChangePassword} size="small" id="password" label="Contraseña" variant="outlined" type="password"/>
+                        <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                            <h4 style={{color: '#1282a2ff'}}>Acceso</h4>
+                            <TextField value={nuevoDispositivo.usuario} onChange={handleChangeUsuario} size='small' id='usuario' label='Usuario' variant='outlined' type='text'/>
+                            <TextField value={nuevoDispositivo.password} onChange={handleChangePassword} size='small' id='password' label='Contraseña' variant='outlined' type='password'/>
                         </Box>
                     </Box>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={confirmarCambios} color="success" variant="outlined">Confirmar cambios</Button>
-                        <Button onClick={closeEditar} color="error" variant="outlined">Cancelar</Button>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={confirmarCambios} color='success' variant='outlined'>Confirmar cambios</Button>
+                        <Button onClick={closeEditar} color='error' variant='outlined'>Cancelar</Button>
                     </Stack>
                 </Box>
             </Modal>
 
             {/* Modal borrar Dispositivo */}
-            <Modal open={modalBorrar} onClose={handleCloseBorrar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={modalBorrar} onClose={handleCloseBorrar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <h1 className="confirmation-text">¿Confirma que desea borrar el equipo?</h1>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={handleBorrar} color="success" variant="outlined">Si</Button>
-                        <Button onClick={handleCloseBorrar} color="error" variant="outlined">No</Button>
+                    <h1 className='confirmation-text'>¿Confirma que desea borrar el equipo?</h1>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={handleBorrar} color='success' variant='outlined'>Si</Button>
+                        <Button onClick={handleCloseBorrar} color='error' variant='outlined'>No</Button>
                     </Stack>
                 </Box>
             </Modal>
 
             {/* Modal Añadir Dispositivo */}
-            <Modal open={modalAdd} onClose={handleCloseAdd} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal open={modalAdd} onClose={handleCloseAdd} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
                 <Box sx={stylesModal}>
-                    <h1 className="confirmation-text">Añadir equipo</h1>
-                    <Box sx={{display: "flex",flexDirection: "column",justifyContent: "space-between", height: "600px", marginBottom: 4}}>
-                        <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                            <h4 style={{color: "#1282a2ff"}}>Detalle</h4>
-                            <TextField onChange={handleChangeNombre} size="small" id="descripcion" label="Nombre" variant="outlined" type="text"/>
-                            <TextField onChange={handleChangeMarca} size="small" id="marca" label="Marca" variant="outlined" type="text"/>
-                            <TextField onChange={handleChangeModelo} size="small" id="modelo" label="Modelo" variant="outlined" type="text"/>
-                            <TextField onChange={handleChangeSerie} size="small" id="numero-serie" label="Serie" variant="outlined" type="text"/>
-                            <TextField onChange={handleChangeTipo} size="small" id="select-tipo" select label="Tipo de equipo" value={nuevoDispositivo?.tipo}>
+                    <h1 className='confirmation-text'>Añadir equipo</h1>
+                    <Box sx={{display: 'flex',flexDirection: 'column',justifyContent: 'space-between', height: '600px', marginBottom: 4}}>
+                        <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                            <h4 style={{color: '#1282a2ff'}}>Detalle</h4>
+                            <TextField onChange={handleChangeNombre} size='small' id='descripcion' label='Nombre' variant='outlined' type='text'/>
+                            <TextField onChange={handleChangeMarca} size='small' id='marca' label='Marca' variant='outlined' type='text'/>
+                            <TextField onChange={handleChangeModelo} size='small' id='modelo' label='Modelo' variant='outlined' type='text'/>
+                            <TextField onChange={handleChangeSerie} size='small' id='numero-serie' label='Serie' variant='outlined' type='text'/>
+                            <TextField onChange={handleChangeTipo} size='small' id='select-tipo' select label='Tipo de equipo' value={nuevoDispositivo?.tipo}>
                                 {
                                     tiposEquipos.map(tipo=>{
                                         return(
@@ -337,38 +337,38 @@ const Dispositivos = () => {
                                 }
                             </TextField>
                         </Box>
-                        <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                            <h4 style={{color: "#1282a2ff"}}>Conexión</h4>
-                            <TextField onChange={handleChangeIp} size="small" id="ip" label="IP" variant="outlined" type="text"/>
-                            <TextField onChange={handleChangePuerto} size="small" id="puerto" label="Puerto" variant="outlined" type="number"/>
+                        <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                            <h4 style={{color: '#1282a2ff'}}>Conexión</h4>
+                            <TextField onChange={handleChangeIp} size='small' id='ip' label='IP' variant='outlined' type='text'/>
+                            <TextField onChange={handleChangePuerto} size='small' id='puerto' label='Puerto' variant='outlined' type='number'/>
                         </Box>
-                        <Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                            <h4 style={{color: "#1282a2ff"}}>Acceso</h4>
-                            <TextField onChange={handleChangeUsuario} size="small" id="usuario" label="Usuario" variant="outlined" type="text"/>
-                            <TextField onChange={handleChangePassword} size="small" id="password" label="Contraseña" variant="outlined" type="password"/>
+                        <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                            <h4 style={{color: '#1282a2ff'}}>Acceso</h4>
+                            <TextField onChange={handleChangeUsuario} size='small' id='usuario' label='Usuario' variant='outlined' type='text'/>
+                            <TextField onChange={handleChangePassword} size='small' id='password' label='Contraseña' variant='outlined' type='password'/>
                         </Box>
                     </Box>
-                    <Stack spacing={4} direction="row" justifyContent="center">
-                        <Button onClick={handleAdd} color="success" variant="outlined">Confirmar</Button>
-                        <Button onClick={handleCloseAdd} color="error" variant="outlined">Cancelar</Button>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button onClick={handleAdd} color='success' variant='outlined'>Confirmar</Button>
+                        <Button onClick={handleCloseAdd} color='error' variant='outlined'>Cancelar</Button>
                     </Stack>
                 </Box>
             </Modal>
-            <div className="content-header">
+            <div className='content-header'>
                 <ElevatorRoundedIcon sx={{fontSize: 40}}/>
                 <h3>Equipos</h3>
             </div>
             <DataGrid
                 disableRowSelectionOnClick={true}
                 onRowClick={editarDispositivoRow}
-                sx={{height: "80%"}}
+                sx={{height: '80%'}}
                 loading={loading}
                 rows={dispositivos}
                 columns={gridColumns}
                 autoPageSize
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}
             />
-            <Button sx={{marginTop: "20px"}} onClick={addDevice} variant="outlined" startIcon={<AddIcon/>}>Añadir dispositivo</Button>
+            <Button sx={{marginTop: '20px'}} onClick={addDevice} variant='outlined' startIcon={<AddIcon/>}>Añadir dispositivo</Button>
         </>
     )
 }

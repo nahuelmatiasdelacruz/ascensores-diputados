@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import loadingFinger from "../../../../../img/loadingFinger.gif";
-import toast, {Toaster} from "react-hot-toast";
-import { stylesModal } from "../../../../../styles/customStyles";
+import React, { useState } from 'react';
+import loadingFinger from '../../../../../img/loadingFinger.gif';
+import toast from 'react-hot-toast';
+import { stylesModal } from '../../../../../styles/customStyles';
+import { Switch, Stack, EditIcon, IconButton, DeleteIcon, FormControlLabel, Modal, Box, Button, LoadingButton, TextField, MenuItem, DataGrid, esES, AddIcon } from '../../../../';
 import { styled } from '@mui/material/styles';
-import { MUIButtons, MUIIcons, MUIInputs, MUIDisplay, MUILayout, MUINavigation, MUITools } from "../../../../../helpers/MaterialImports";
 
 const AccesosTab = () => {
     const IOSSwitch = styled((props) => (
-        <MUIInputs.Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+        <Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />
       ))(({ theme }) => ({
         width: 42,
         height: 26,
@@ -60,7 +60,7 @@ const AccesosTab = () => {
     const [openModalAdd,setOpenModalAdd] = useState(false);
     const [openEditar,setOpenEditar] = useState(false);
     const [selectedRow,setSelectedRow] = useState({});
-    const [selectedRoller,setSelectedRoller] = useState("");
+    const [selectedRoller,setSelectedRoller] = useState('');
     const [openBorrar,setOpenBorrar] = useState(false);
     const [scanningFinger,setScanningFinger] = useState(false);
     const [tarjetas,setTarjetas] = useState([]);
@@ -100,137 +100,137 @@ const AccesosTab = () => {
         setOpenEditar(true);
     }
     const startScan = () => {
-        if(selectedRoller!==""){
+        if(selectedRoller!==''){
             setScanningFinger(true);
             setTimeout(()=>{
                 setScanningFinger(false);
                 setOpenEditar(false);
-                toast.success("Se ha escaneado la huella con éxito!");
+                toast.success('Se ha escaneado la huella con éxito!');
             },2000)    
         }else{
-            toast.error("Por favor seleccione un enrolador");
+            toast.error('Por favor seleccione un enrolador');
             return;
         }
     }
     const gridColumns = [
-        {field: "descripcion", headerName: "Descripción", width: 300},
-        {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Acciones",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'descripcion', headerName: 'Descripción', width: 300},
+        {field: 'actions',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Acciones',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <MUIButtons.Stack direction="row" spacing={1}>
-                    <MUIIcons.IconButton onClick={(e)=>{editarHuella(e,params.row)}} color="success" aria-label="edit">
-                        <MUIButtons.EditIcon/>
-                    </MUIIcons.IconButton>
-                    <MUIButtons.IconButton onClick={(e)=>{borrarHuella(e,params.row)}} color="error" aria-label="delete">
-                        <MUIButtons.DeleteIcon/>
-                    </MUIButtons.IconButton>
-                </MUIButtons.Stack>
+                <Stack direction='row' spacing={1}>
+                    <IconButton onClick={(e)=>{editarHuella(e,params.row)}} color='success' aria-label='edit'>
+                        <EditIcon/>
+                    </IconButton>
+                    <IconButton onClick={(e)=>{borrarHuella(e,params.row)}} color='error' aria-label='delete'>
+                        <DeleteIcon/>
+                    </IconButton>
+                </Stack>
             )
         }},
     ]
     const tarjetasColumns = [
-        {field: "id", headerName: "ID", width:150},
-        {field: "actions",disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: "Habilitada",sortable: false,width: 130,renderCell: (params)=>{
+        {field: 'id', headerName: 'ID', width:150},
+        {field: 'actions',disableColumnMenu: true,disableColumnFilter: true,disableColumnSelector: true,headerName: 'Habilitada',sortable: false,width: 130,renderCell: (params)=>{
             return(
-                <MUIButtons.Stack direction="row" spacing={1}>
-                    <MUIInputs.FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked={params.row.estado}/>}/>
-                </MUIButtons.Stack>
+                <Stack direction='row' spacing={1}>
+                    <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked={params.row.estado}/>}/>
+                </Stack>
             )
         }},
     ]
 
     return(
-        <div className="accesos-container">
-            <MUIInputs.Modal open={openBorrar} onClose={handleCloseBorrar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-                <MUILayout.Box sx={stylesModal}>
-                    <h1 className="confirmation-text">¿Confirma que desea borrar la huella?</h1>
-                    <MUIButtons.Stack spacing={4} direction="row" justifyContent="center">
-                        <MUIButtons.Button color="success" variant="outlined">Si</MUIButtons.Button>
-                        <MUIButtons.Button color="error" variant="outlined">No</MUIButtons.Button>
-                    </MUIButtons.Stack>
-                </MUILayout.Box>
-            </MUIInputs.Modal>
-            <MUIInputs.Modal open={openEditar} onClose={handleCloseEditar} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-                <MUILayout.Box sx={stylesModal}>
-                    <MUILayout.Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                        <div className="content-header">
+        <div className='accesos-container'>
+            <Modal open={openBorrar} onClose={handleCloseBorrar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+                <Box sx={stylesModal}>
+                    <h1 className='confirmation-text'>¿Confirma que desea borrar la huella?</h1>
+                    <Stack spacing={4} direction='row' justifyContent='center'>
+                        <Button color='success' variant='outlined'>Si</Button>
+                        <Button color='error' variant='outlined'>No</Button>
+                    </Stack>
+                </Box>
+            </Modal>
+            <Modal open={openEditar} onClose={handleCloseEditar} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+                <Box sx={stylesModal}>
+                    <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                        <div className='content-header'>
                             <h3>Modificar huella</h3>
-                            <p>Por favor, coloque la huella en el lector y pulse "Iniciar escaneo"</p>
+                            <p>Por favor, coloque la huella en el lector y pulse 'Iniciar escaneo'</p>
                         </div>
-                        <div className="loading-finger">
-                            <img src={loadingFinger} alt="loadingFinger"/>
+                        <div className='loading-finger'>
+                            <img src={loadingFinger} alt='loadingFinger'/>
                         </div>
-                    </MUILayout.Box>
-                    <MUIButtons.LoadingButton disabled={selectedRoller} color="primary" onClick={startScan} loading={scanningFinger} loadingPosition="center" variant="outlined">
+                    </Box>
+                    <LoadingButton disabled={selectedRoller} color='primary' onClick={startScan} loading={scanningFinger} loadingPosition='center' variant='outlined'>
                         <span>Escanear huella</span>
-                    </MUIButtons.LoadingButton>
-                </MUILayout.Box>
-            </MUIInputs.Modal>
-            <MUIInputs.Modal open={openModalAdd} onClose={handleCloseAdd} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-                <MUILayout.Box sx={stylesModal}>
-                    <MUILayout.Box component="form" sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-                        <div className="content-header">
+                    </LoadingButton>
+                </Box>
+            </Modal>
+            <Modal open={openModalAdd} onClose={handleCloseAdd} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+                <Box sx={stylesModal}>
+                    <Box component='form' sx={{   '& > :not(style)': { m: 1, width: '25ch' }, }} noValidate autoComplete='off'>
+                        <div className='content-header'>
                             <h3>Añadir una nueva huella</h3>
-                            <p>Por favor, coloque la huella en el lector y pulse "Iniciar escaneo"</p>
+                            <p>Por favor, coloque la huella en el lector y pulse 'Iniciar escaneo'</p>
                         </div>
-                        <div className="loading-finger">
-                            <img src={loadingFinger} alt="loadingFinger"/>
+                        <div className='loading-finger'>
+                            <img src={loadingFinger} alt='loadingFinger'/>
                         </div>
-                    </MUILayout.Box>
-                    <MUIInputs.TextField onChange={setNewRoller} sx={{width: "60%",marginBottom: "20px"}} id="select-enrolador" select label="Enrolador">
-                        <MUIInputs.MenuItem key="enrolador1" value="enrolador1">Oficina gerente</MUIInputs.MenuItem>
-                        <MUIInputs.MenuItem key="enrolador2" value="enrolador2">Oficina director</MUIInputs.MenuItem>
-                        <MUIInputs.MenuItem key="enrolador3" value="enrolador3">Acceso primer piso</MUIInputs.MenuItem>
-                        <MUIInputs.MenuItem key="enrolador4" value="enrolador4">Acceso monitoreo</MUIInputs.MenuItem>
-                        <MUIInputs.MenuItem key="enrolador5" value="enrolador5">Acceso comedor</MUIInputs.MenuItem>
-                        <MUIInputs.MenuItem key="enrolador6" value="enrolador6">Acceso salida</MUIInputs.MenuItem>
-                    </MUIInputs.TextField>
-                    <MUIButtons.LoadingButton color="primary" onClick={startScan} loading={scanningFinger} loadingPosition="center" variant="outlined">
+                    </Box>
+                    <TextField onChange={setNewRoller} sx={{width: '60%',marginBottom: '20px'}} id='select-enrolador' select label='Enrolador'>
+                        <MenuItem key='enrolador1' value='enrolador1'>Oficina gerente</MenuItem>
+                        <MenuItem key='enrolador2' value='enrolador2'>Oficina director</MenuItem>
+                        <MenuItem key='enrolador3' value='enrolador3'>Acceso primer piso</MenuItem>
+                        <MenuItem key='enrolador4' value='enrolador4'>Acceso monitoreo</MenuItem>
+                        <MenuItem key='enrolador5' value='enrolador5'>Acceso comedor</MenuItem>
+                        <MenuItem key='enrolador6' value='enrolador6'>Acceso salida</MenuItem>
+                    </TextField>
+                    <LoadingButton color='primary' onClick={startScan} loading={scanningFinger} loadingPosition='center' variant='outlined'>
                         <span>Escanear huella</span>
-                    </MUIButtons.LoadingButton>
-                </MUILayout.Box>
-            </MUIInputs.Modal>
+                    </LoadingButton>
+                </Box>
+            </Modal>
             <div>
-                <div className="usuarios">
+                <div className='usuarios'>
                     <h4>Agrupamiento de accesos</h4>
-                    <MUIInputs.TextField onChange={setNewGroup} sx={{width: "180px",marginBottom: "20px"}} id="select-grupo" select label="Grupo de usuarios">
-                        {grupos.map((grupo)=><MUIInputs.MenuItem key={grupo} value={grupo}>{grupo}</MUIInputs.MenuItem>)}
-                    </MUIInputs.TextField>
+                    <TextField onChange={setNewGroup} sx={{width: '180px',marginBottom: '20px'}} id='select-grupo' select label='Grupo de usuarios'>
+                        {grupos.map((grupo)=><MenuItem key={grupo} value={grupo}>{grupo}</MenuItem>)}
+                    </TextField>
                 </div>
-                <div className="grupos">
+                <div className='grupos'>
                     <h4>Dispositivos</h4>
-                    <MUIInputs.TextField onChange={setNewGroupAccess} sx={{width: "180px",marginBottom: "20px"}} id="select-grupo-acceso" select label="Grupo de acceso">
-                        {gruposAcceso.map((grupo)=><MUIInputs.MenuItem key={grupo} value={grupo}>{grupo}</MUIInputs.MenuItem>)}
-                    </MUIInputs.TextField>
+                    <TextField onChange={setNewGroupAccess} sx={{width: '180px',marginBottom: '20px'}} id='select-grupo-acceso' select label='Grupo de acceso'>
+                        {gruposAcceso.map((grupo)=><MenuItem key={grupo} value={grupo}>{grupo}</MenuItem>)}
+                    </TextField>
                 </div>
             </div>
-            <div className="huellas">
+            <div className='huellas'>
                 <h4>Huellas digitales</h4>
-                <MUILayout.Box sx={{width:"500px",margin:"0 0 10px 0"}}>
-                    <MUILayout.DataGrid
+                <Box sx={{width:'500px',margin:'0 0 10px 0'}}>
+                    <DataGrid
                     disableRowSelectionOnClick={true}
-                        sx={{margin: "0",height: "300px"}}
+                        sx={{margin: '0',height: '300px'}}
                         loading={loading}
                         autoPageSize
                         rows={huellas}
                         columns={gridColumns}
-                        localeText={MUILayout.esES.components.MuiDataGrid.defaultProps.localeText}
+                        localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                         />
-                    <MUIButtons.Button sx={{marginTop: "20px"}} onClick={addHuella} variant="outlined" startIcon={<MUIIcons.AddIcon/>}>Añadir huella</MUIButtons.Button>
-                </MUILayout.Box>
+                    <Button sx={{marginTop: '20px'}} onClick={addHuella} variant='outlined' startIcon={<AddIcon/>}>Añadir huella</Button>
+                </Box>
             </div>
-            <div className="Tarjetas">
+            <div className='Tarjetas'>
                 <h4>Tarjetas</h4>
-                <MUILayout.Box sx={{width:"350px",margin:"0 0 10px 0"}}>
-                    <MUILayout.DataGrid
+                <Box sx={{width:'350px',margin:'0 0 10px 0'}}>
+                    <DataGrid
                         disableRowSelectionOnClick={true}
-                        sx={{margin: "0", height: "300px"}}
+                        sx={{margin: '0', height: '300px'}}
                         loading={loading}
                         rows={tarjetas}
                         columns={tarjetasColumns}
                         autoPageSize
-                        localeText={MUILayout.esES.omponents.MuiDataGrid.defaultProps.localeText}
+                        localeText={esES.omponents.MuiDataGrid.defaultProps.localeText}
                     />
-                </MUILayout.Box>
+                </Box>
             </div>
         </div>
     )
