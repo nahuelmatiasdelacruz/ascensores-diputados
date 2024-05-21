@@ -4,7 +4,7 @@ import {server} from '../../../../helpers/constants';
 import toast, {Toaster} from 'react-hot-toast';
 import axios from 'axios';
 
-const Periodos = () => {
+export const Periodos = () => {
     const [loading,setLoading] = useState(false);
     const [periodos,setPeriodos] = useState([]);
     const [selected,setSelected] = useState({});
@@ -78,6 +78,4 @@ const Periodos = () => {
             <Button sx={{marginTop: 2}} onClick={addPeriodo} color='success' variant='outlined'>Añadir periodo legislativo</Button>
         </>
     )
-}
-
-export default Periodos;
+};

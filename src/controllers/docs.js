@@ -1,13 +1,11 @@
+const { docsQueries } = require('../constants/docsControllersQueries');
 const { knex } = require('../helpers/knexConfig');
 
 const subirDocumentacion = async (req,res) => {
-    const archivo = req.file;
+    const {empleado_id,observaciones} = req.body;
+    const {originalname} = req.file;
     try{
-        await knex.raw(`call sgp.sp_adjunto_ins(:empleado_id,:descripcion,:filename,1,null);`,{
-            empleado_id: req.body.empleado_id,
-            descripcion: req.body.observaciones,
-            filename: archivo.originalname,
-        });
+        await knex.raw(docsQueries.ADD_DOCUMENT,{empleado_id,observaciones,originalname});
         return res.status(200).json({msg: 'ok'});
     }catch(e){
         console.log(e.message);
@@ -48,12 +46,9 @@ const getDocById = async (req,res) => {
     }
 }
 const deleteDoc = async (req, res) => {
-    console.log(req.params.id);
+    const {id: p_adunto_id} = req.params;
     try{
-        console.log('Borrando documento con ID: ' + req.params.id);
-        await knex.raw(`call sgp.sp_adjunto_del(:p_adjunto_id,1);`,{
-            p_adjunto_id: req.params.id
-        });
+        await knex.raw(docsQueries.DELETE_DOCUMENT,{p_adunto_id});
         return res.status(200).json({msg: 'ok'});
     }catch(e){
         console.log(e);

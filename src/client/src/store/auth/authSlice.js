@@ -4,12 +4,18 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     errorMessage: null,
-    isCheckingCredentials: true,
+    isCheckingCredentials: false,
     status: 'not-authenticated',
     token: null,
     user: null,
   },
   reducers: {
+    startCheckingCredentials: (state) => {
+      state.isCheckingCredentials = true;
+    },
+    stopCheckingCredentials: (state) => {
+      state.isCheckingCredentials = false;
+    },
     login: (state,{payload})=>{
       state.errorMessage = null;
       state.isCheckingCredentials = false;
@@ -27,4 +33,4 @@ export const authSlice = createSlice({
   }
 });
 
-export const {login,logout} = authSlice.actions;
+export const {login,logout,startCheckingCredentials,stopCheckingCredentials} = authSlice.actions;

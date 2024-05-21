@@ -1,5 +1,6 @@
-const { default: axios } = require('axios');
 const { knex } = require('../helpers/knexConfig');
+const { executeServiceFunction } = require('../helpers/externalServiceHelpers');
+const { groupQueries } = require('../constants/groupControllersQueries');
 
 const getGrupos = async (req,res)=>{
     try{
@@ -19,35 +20,23 @@ const getGrupos = async (req,res)=>{
         res.status(500).json({msg: 'Hubo un error al buscar los grupos'});
     }
 }
-const getGrupoById = async (req,res) => {
-    try{
-        const {id} = req.params;
-        let equiposAsociados = await knex.select('*').from('sgp.vw_grupos_equipos').where({grupo_id:id,registro_activo: true});
-        console.log(equiposAsociados);
-        equiposAsociados = equiposAsociados.map(equipo=>{
-            return {
-                ...equipo,
-                id: equipo.equipo_id
-            }
-        })
-        const allDevices = await knex.select('*').from('sgp.equipos').where('registro_activo',true);
-        let equiposFiltrados = allDevices.filter(equipo=>!equiposAsociados.some(equipoB=>equipoB.equipo_id === equipo.equipo_id));
-        equiposFiltrados = equiposFiltrados.map(equipo=>{
-            return {
-                id: equipo.equipo_id,
-                label: equipo.descripcion
-            }
-        })
-        res.json({equiposFiltrados,equiposAsociados});
-    }catch(e){
-        console.log(e.message);
-        res.status(400).json({msg: 'Hubo un error', error: e.message});
-    }
-}
+const getGrupoById = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const [equiposFiltrados, equiposAsociados] = await knex.raw(groupQueries.GET_GROUP_BY_ID, [id, id]);
+      res.json({
+          equiposFiltrados: equiposFiltrados.rows,
+          equiposAsociados: equiposAsociados.rows
+      });
+  } catch (e) {
+      console.log(e.message);
+      res.status(400).json({ msg: 'Hubo un error', error: e.message });
+  }
+};
 const addGroup = async (req,res)=>{
     try{
-        const grupo = req.body;
-        const response = await knex.raw(`call sgp.sp_grupo_ins('${grupo.nombre}',1,null);`);
+        const {nombre}= req.body;
+        await knex.raw(groupQueries.ADD_GROUP,{nombre});
         res.status(200).json({msg: 'ok'});
     }catch(e){
         res.status(400).json({msg: 'error', error: e.message});
@@ -56,7 +45,7 @@ const addGroup = async (req,res)=>{
 const addGrupoEquipo = async (req,res)=>{
     try{
         const {equipo_id,grupo_id} = req.body;
-        await knex.raw(`call sgp.sp_grupo_equipo_ins('${grupo_id}','${equipo_id}',1);`);
+        await knex.raw(groupQueries.ADD_DEVICE_GROUP,{equipo_id,grupo_id});
         await knex('sgp.equipo_empleados').insert(parsed);
         res.status(200).json({msg: 'ok'});
     }catch(e){
@@ -65,62 +54,42 @@ const addGrupoEquipo = async (req,res)=>{
     }
 }
 const updateGroup = async (req,res)=>{
-    try{
-        await knex.raw(`call sgp.sp_grupo_upd(${req.body.grupo_id},'${req.body.nuevoNombre}',1);`);
-        res.status(200).json({msg: 'Ok'});
-    }catch(e){
-        res.status(400).json({msg: 'Error', error: e.message});
-    }
+  const {grupo_id,nuevoNombre} = req.body;
+  try{
+      await knex.raw(groupQueries.RENAME_GROUP,{grupo_id,nuevoNombre});
+      res.status(200).json({msg: 'Ok'});
+  }catch(e){
+      res.status(400).json({msg: 'Error', error: e.message});
+  }
 }
-const deleteGroup = async (req,res)=>{ 
+const deleteGroup = async (req,res)=>{
+  const {id} = req.params;
     try{
-        await knex.raw(`call sgp.sp_grupo_del(${req.params.id},1);`);
+        await knex.raw(groupQueries.DELETE_GROUP,{id});
         res.status(200).json({msg: 'ok'});
     }catch(e){
         res.status(400).json({msg: 'Hubo un error al borrar el grupo',error: e.message});
     }
 }
 const deleteGrupoEquipo = async(req,res)=>{
-    const equipo_id = req.params.id;
-    try{
-        await knex.raw(`call sgp.sp_grupo_equipo_del(${equipo_id},1);`);
-        await knex('sgp.equipo_empleados').where('equipo_id',equipo_id).del();
-        console.log(borrados);
-        res.status(200).json({msg: 'Se ha borrado el equipo correctamente'});
-    }catch(e){
-        res.status(400).json({msg: 'Hubo un error al borrar el equipo', error: e.message});
-        console.log(e.message);
-
-    }
+  const {id} = req.params;
+  try{
+      await knex.raw(groupQueries.REMOVE_DEVICE_GROUP,{id});
+      await knex('sgp.equipo_empleados').where('equipo_id',id).del();
+      res.status(200).json({msg: 'Se ha borrado el equipo correctamente'});
+  }catch(e){
+      res.status(400).json({msg: 'Hubo un error al borrar el equipo', error: e.message});
+      console.log(e.message);
+  }
 }
 const getGruposAsociados = async(req,res)=>{
     const {id} = req.params;
     try{
-        const gruposAsociados = await knex.select('*').from('sgp.vw_grupo_empleados').where({
-            registro_activo: true,
-            empleado_id: id
-        });
-        const gruposAsociadosIds = gruposAsociados.map((grupo)=>grupo.grupo_id);
-        const gruposDisponibles = await knex.select('*').from('sgp.grupos')
-        .whereNotIn('grupo_id',gruposAsociadosIds)
-        .andWhere('registro_activo',true);
-
-        const parsedDisponibles = gruposDisponibles.map((ga)=>{
-            return {
-                label: ga.descripcion,
-                id: ga.grupo_id,
-            }
-        })
-        const parsedAsociados = gruposAsociados.map((grupo)=>{
-            return {
-                ...grupo,
-                id: grupo.grupo_empleado_id
-            }
-        })
-        res.json({
-            asociados: parsedAsociados,
-            disponibles: parsedDisponibles
-        });
+      const [gruposDisponibles, gruposAsociados] = await knex.raw(groupQueries.GET_ASOCIATED_GROUPS, [id, id]);
+      res.json({
+          asociados: gruposAsociados.rows,
+          disponibles: gruposDisponibles.rows
+      });
     }catch(e){
         console.log(e.message);
         res.status(500).json({msg: 'Hubo un error al buscar los grupos', error: e.message});
@@ -130,14 +99,11 @@ const asociarGrupo = async (req,res) => {
     let equiposToAsociate = [];
     const {grupo_id, empleado_id} = req.body;
     try{
-        await knex.raw(`call sgp.sp_grupo_empleado_ins(:grupo_id,:empleado_id,1);`,{
-            grupo_id: grupo_id, 
-            empleado_id: empleado_id
-        });
+        await knex.raw(groupQueries.ASOCIATE_GROUP,{grupo_id,empleado_id});
         const gruposAsociados = await knex.select('grupo_id').from('sgp.vw_grupo_empleados').where({
             registro_activo: true,
-            grupo_id: grupo_id,
-            empleado_id: empleado_id
+            grupo_id,
+            empleado_id
         });
         for(let grupo in gruposAsociados){
             const id = gruposAsociados[grupo].grupo_id;
@@ -166,21 +132,13 @@ const asociarGrupo = async (req,res) => {
         });
         if(equiposToAsociate.length > 0){
             for(let equipo in equiposToAsociate){
-                await knex.raw(`call sgp.sp_equipo_empleado_ins(
-                    :equipo_id,
-                    :empleado_id,
-                    1
-                );`,{
+                await knex.raw(groupQueries.ADD_DEVICE_EMPLOYEE_RELATION,{
                     equipo_id: equiposToAsociate[equipo].equipo_id,
                     empleado_id: req.body.empleado_id
-                });
+                  });
             }
         }
-        await axios.post('http://127.0.0.1:9099',obj,{
-            headers: {
-                'x-action':'AgregarUsuario'
-            }
-        })
+        await executeServiceFunction(obj,'AgregarUsuario');
         res.status(200).json({msg: 'ok'});
     }catch(e){
         console.log(e);
@@ -188,6 +146,7 @@ const asociarGrupo = async (req,res) => {
     }
 }
 const borrarGrupoAsociado = async (req,res) => {
+  const {id} = req.params;
     let obj = {
         id: '',
         equipos: []
@@ -204,7 +163,6 @@ const borrarGrupoAsociado = async (req,res) => {
             registro_activo: true
         });
         equiposAsociados.forEach((equipo)=>{
-            console.log('Equipo = ' + equipo);
             obj.equipos.push({
                 id: `${equipo.equipo_id}`
             });
@@ -215,12 +173,8 @@ const borrarGrupoAsociado = async (req,res) => {
                 empleado_id: gruposAsociados[0].empleado_id
             }).del();
         }
-        await knex.raw(`call sgp.sp_grupo_empleado_del(${req.params.id},1);`);
-        await axios.post('http://127.0.0.1:9099',obj,{
-            headers: {
-                'x-action':'QuitarUsuario'
-            }
-        });
+        await knex.raw(groupQueries.DELETE_EMPLOYEE_FROM_GROUP,{id});
+        await executeServiceFunction(obj,'QuitarUsuario');
         res.status(200).json({msg: 'ok'});
     }catch(e){
         console.log(e.message);

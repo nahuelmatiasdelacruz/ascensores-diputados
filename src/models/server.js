@@ -2,33 +2,16 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { apiPaths } = require('../constants/ServerConstants');
 
 class Server{
     constructor(){
         this.app = express();
         this.filesFolderPath = path.join(__dirname,'..','..','uploads');
         this.port = process.env.PORT || 8080;
-        this.paths = {
-            auth: '/api/auth',
-            configuracion: '/api/configuracion',
-            dispositivos: '/api/dispositivos',
-            docs: '/api/docs',
-            empleados: '/api/empleados',
-            enrolaciones: '/api/enrolaciones',
-            find: '/api/find',
-            grupos: '/api/grupos',
-            habilitaciones: '/api/habilitaciones',
-            huellas: '/api/huellas',
-            marcaciones: '/api/marcaciones',
-            registros: '/api/registros',
-            users: '/api/users',
-            visitas: '/api/visitas',
-        };
+        this.paths = apiPaths;
         this.middlewares();
         this.routes();
-    }
-    async conectarDb(){
-        await dbConnection();
     }
     middlewares(){
         this.app.use(express.static((this.filesFolderPath)));

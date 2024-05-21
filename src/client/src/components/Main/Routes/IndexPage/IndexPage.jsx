@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import '../../../styles/styles.css';
+import '../../../../styles/styles.css';
 import EdgesensorLowIcon from '@mui/icons-material/EdgesensorLow';
 import PersonIcon from '@mui/icons-material/Person';
 import TourIcon from '@mui/icons-material/Tour';

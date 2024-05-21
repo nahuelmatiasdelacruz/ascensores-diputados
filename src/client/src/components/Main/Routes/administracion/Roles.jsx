@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Roles = () => {
+export const Roles = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Roles;
+};

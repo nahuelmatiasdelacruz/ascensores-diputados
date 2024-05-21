@@ -16,7 +16,7 @@ import axios from 'axios';
 import { server } from '../../../../helpers/constants';
 import dayjs from 'dayjs';
 
-const Marcaciones = () => {
+export const Marcaciones = () => {
     const [loading,setLoading] = useState(false);
     const [marcaciones,setMarcaciones] = useState([]);
     const marcacionesColumns = [
@@ -144,6 +144,4 @@ const Marcaciones = () => {
             />
         </>
     )
-}
-
-export default Marcaciones;
+};

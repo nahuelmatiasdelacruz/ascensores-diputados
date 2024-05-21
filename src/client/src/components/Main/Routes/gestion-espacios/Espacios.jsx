@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Espacios = () => {
+export const Espacios = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Espacios;
+};

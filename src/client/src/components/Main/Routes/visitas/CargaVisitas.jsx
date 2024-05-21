@@ -17,7 +17,7 @@ import Visitante from './Visitante';
 import StepThree from './Steps/StepThree';
 
 
-const CargaVisitas = () => {
+export const CargaVisitas = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [datosVisitante,setDatosVisitante] = useState({
         documento: 0,
@@ -130,5 +130,3 @@ const CargaVisitas = () => {
     </>
   );
 };
-
-export default CargaVisitas;

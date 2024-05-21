@@ -19,7 +19,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import toast, {Toaster} from 'react-hot-toast';
 import { stylesModal } from '../../../../styles/customStyles';
 
-const Usuarios = () => {
+export const Usuarios = () => {
     const IOSSwitch = styled((props) => (
         <Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />
       ))(({ theme }) => ({
@@ -165,6 +165,4 @@ const Usuarios = () => {
             <Button sx={{marginTop: '20px'}} onClick={addUsuario} variant='outlined' startIcon={<AddIcon/>}>Añadir usuario</Button>
         </Box>
     )
-}
-
-export default Usuarios;
+};

@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Oficinas = () => {
+export const Oficinas = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Oficinas;
+};

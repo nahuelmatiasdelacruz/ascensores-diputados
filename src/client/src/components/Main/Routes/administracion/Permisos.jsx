@@ -13,7 +13,7 @@ import toast, {Toaster} from 'react-hot-toast';
 import EditIcon from '@mui/icons-material/Edit';
 import { stylesModal } from '../../../../styles/customStyles';
 
-const Permisos = () => {
+export const Permisos = () => {
     const [loading,setLoading] = useState(false);
     const [selected,setSelected] = useState({});
     const [openBorrar,setOpenBorrar] = useState(false);
@@ -94,6 +94,4 @@ const Permisos = () => {
             <Button sx={{marginTop: '20px'}} onClick={addPermiso} variant='outlined' startIcon={<AddIcon/>}>Añadir permiso</Button>
         </>
     )
-}
-
-export default Permisos;
+};

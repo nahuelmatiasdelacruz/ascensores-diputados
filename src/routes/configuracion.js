@@ -1,10 +1,10 @@
 const {Router} = require('express');
-const {configuracionController} = require('../controllers/configuracionController');
+const {configurationController} = require('../controllers/configurationController');
 const router = Router();
 
-router.get('/periodos',configuracionController.getPeriodos);
-router.post('/periodos',configuracionController.addPeriodo);
-router.put('/periodos',configuracionController.updatePeriodo);
-router.delete('/periodos',configuracionController.deletePeriodo);
+router.get('/periodos',configurationController.getPeriodos);
+router.post('/periodos',configurationController.addPeriodo);
+router.put('/periodos',configurationController.updatePeriodo);
+router.delete('/periodos',configurationController.deletePeriodo);
 
 module.exports = router;

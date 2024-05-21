@@ -8,16 +8,13 @@ const login = async (req,res) => {
             username: user
         });
         if(userDb.length === 0){
-            console.log('El usuario no existe en la base de datos');
             return res.status(400).json({msg: 'Usuario o contraseña incorrectos'});
         }
         if(userDb.habilitado === false){
             return res.status(400).json({msg: 'Usuario inhabilitado'});
         }
-        console.log(userDb);
         const validPassword = bcryptjs.compareSync(password,userDb[0].password);
         if(!validPassword){
-            console.log('Contraseña incorrecta');
             return res.status(400).json({msg: 'Usuario o contraseña incorrectos'});
         }
         if(userDb.length > 0){

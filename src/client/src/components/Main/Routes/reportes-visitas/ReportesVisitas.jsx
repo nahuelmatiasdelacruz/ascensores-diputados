@@ -1,11 +1,9 @@
 import React from 'react';
 
-const ReportesVisitas = () => {
+export const ReportesVisitas = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default ReportesVisitas;
+};

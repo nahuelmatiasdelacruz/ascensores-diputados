@@ -78,7 +78,6 @@ export const AscensoresTab = () => {
     }
     const setNewRoller = (e) => {
         setSelectedRoller(e.target.value);
-        console.log(e.target.value);
     }
     const gridColumns = [
         {field: 'id', headerName: 'ID', width: 100},

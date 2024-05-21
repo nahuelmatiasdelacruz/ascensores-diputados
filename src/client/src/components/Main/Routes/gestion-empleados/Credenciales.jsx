@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Credenciales = () => {
+export const Credenciales = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Credenciales;
+};

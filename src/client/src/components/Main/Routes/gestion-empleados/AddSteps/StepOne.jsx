@@ -122,7 +122,7 @@ const StepOne = ({datos,setDatos}) => {
         }
         temp = setTimeout(()=>{
             if(scannedData){
-                const scanned = scannedData.split(''');
+                const scanned = scannedData.split('');
                 if(scanned.length > 1){
                     setDatos({
                         ...datos,

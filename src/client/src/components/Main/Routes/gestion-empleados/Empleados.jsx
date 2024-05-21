@@ -23,7 +23,7 @@ import StepOne from './AddSteps/StepOne';
 import StepTwo from './AddSteps/StepTwo';
 import StepThree from './AddSteps/StepThree';
 
-const Empleados = () => {
+export const Empleados = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [loading,setLoading] = useState(false);
     const [selected,setSelected] = useState({});
@@ -51,7 +51,6 @@ const Empleados = () => {
     }
     const checkEmptyStepOne = () => {
         if(datosNuevoEmpleado.nombre === '' || datosNuevoEmpleado.apellido === '' || datosNuevoEmpleado.documento === '' || datosNuevoEmpleado.nombre === undefined || datosNuevoEmpleado.apellido === undefined || datosNuevoEmpleado.documento === undefined){
-            console.log('Incomplete');
             return false;
         }else{
             return true;
@@ -479,6 +478,4 @@ const Empleados = () => {
             </Box>
         </>
     )
-}
-
-export default Empleados;
+};

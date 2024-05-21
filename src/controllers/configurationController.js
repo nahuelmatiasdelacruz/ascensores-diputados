@@ -12,12 +12,7 @@ const getPeriodos = async (req,res) => {
 }
 
 const addPeriodo = async (req,res) => {
-    //try{
-    //    await knex.raw('call sgp.periodos_legislativos_ins')
-    //}catch(e){
-    //    console.log(e);
-    //    return res.status(500).json({msg: 'Hubo un error al agregar el periodo'});
-    //}
+  
 }
 
 const deletePeriodo = async (req,res) => {
@@ -28,11 +23,11 @@ const updatePeriodo = async (req,res) => {
 
 }
 
-const configuracionController = {
+const configurationController = {
     getPeriodos,
     addPeriodo,
     deletePeriodo,
     updatePeriodo
 }
 
-module.exports = {configuracionController}
+module.exports = {configurationController}

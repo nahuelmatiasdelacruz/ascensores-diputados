@@ -47,9 +47,6 @@ export default function EditTabs({data}) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  React.useEffect(()=>{
-    console.log(data);
-  },[])
   return (
     <Box sx={{ width: '80%', backgroundColor: 'white', margin: '0 auto', marginTop: '30px', boxSizing: 'border-box', padding: '20px',borderRadius: '6px'}}>
       <div className='profile-data-header'>

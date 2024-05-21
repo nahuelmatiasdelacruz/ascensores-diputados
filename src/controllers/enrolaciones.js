@@ -1,11 +1,13 @@
+const { executeServiceFunction } = require("../helpers/externalServiceHelpers");
 
 const enrolarFacial = async (req,res) => {
     const {idEquipo,empleado_id} = req.body;
-    const result = await axios.post('http://localhost:9099',{
+    const obj = {
       id: `${idEquipo}`,
       esBase: true,
       id_usuario: empleado_id
-    },{headers:{'x-action':'AgregarUsuario'}});
+    };
+    await executeServiceFunction(obj,'AgregarUsuario');
 }
 const enrolarHuella = async (req,res) => {
   res.status(200).json({msg: 'ok'});

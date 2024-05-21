@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Firmas = () => {
+export const Firmas = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Firmas;
+};

@@ -1,11 +1,9 @@
 import React from 'react';
 
-const RegistroVisitas = () => {
+export const RegistroVisitas = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default RegistroVisitas;
+};

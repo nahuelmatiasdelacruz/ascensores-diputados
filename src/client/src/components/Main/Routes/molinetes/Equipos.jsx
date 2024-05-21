@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Equipos = () => {
+export const Equipos = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Equipos;
+};

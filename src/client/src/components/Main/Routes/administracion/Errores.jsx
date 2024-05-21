@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Errores = () => {
+export const Errores = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Errores;
+};

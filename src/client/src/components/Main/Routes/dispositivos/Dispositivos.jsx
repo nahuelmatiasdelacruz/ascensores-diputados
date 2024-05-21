@@ -17,7 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Chip from '@mui/material/Chip';
 import { stylesModal } from '../../../../styles/customStyles';
 
-const Dispositivos = () => {
+export const Dispositivos = () => {
     /* Modal controls */
     const [modalSincronizar,setModalSincronizar] = useState(false);
     const [modalEditar,setModalEditar] = useState(false);
@@ -371,6 +371,4 @@ const Dispositivos = () => {
             <Button sx={{marginTop: '20px'}} onClick={addDevice} variant='outlined' startIcon={<AddIcon/>}>Añadir dispositivo</Button>
         </>
     )
-}
-
-export default Dispositivos;
+};

@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Enroladores = () => {
+export const Enroladores = () => {
     return(
         <>
         
         </>
     )
-}
-
-export default Enroladores;
+};

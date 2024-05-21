@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProfileCard from './ProfileCard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import logoEmpresa from '../../../img/logoEmpresa.png';
 import './styles.css';
 import MenuList from './MenuList';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { startLogout } from '../../../store/auth/thunks';
 
 const SideMenu = () => {
-    const navigate = useNavigate();
-    const logout = () => {
-        sessionStorage.clear();
-        navigate('/login');
+    const dispatch = useDispatch();
+    const onLogout = () => {
+      dispatch(startLogout());
     }
     return(
         <div className='sidebar-container'>
@@ -18,7 +18,7 @@ const SideMenu = () => {
             <MenuList/>
             <div className='side-footer'>
                 <img src={logoEmpresa} alt='logo-empresa'/>
-                <button onClick={logout} type='button' className='logout-button'>
+                <button onClick={onLogout} type='button' className='logout-button'>
                     <LogoutIcon/>
                     <p>Salir</p>
                 </button>

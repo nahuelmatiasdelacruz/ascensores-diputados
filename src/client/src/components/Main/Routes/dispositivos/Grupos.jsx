@@ -19,7 +19,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Chip from '@mui/material/Chip';
 import { stylesModal } from '../../../../styles/customStyles';
 
-const Grupos = () => {
+export const Grupos = () => {
     // Estados del componente
     const [inputValue,setInputValue] = useState('');
     const [devices,setDevices] = useState([]);
@@ -288,6 +288,4 @@ const Grupos = () => {
             <Button sx={{marginTop: '20px'}} onClick={agregarGrupo} variant='outlined' startIcon={<AddIcon/>}>Añadir grupo</Button>
         </>
     )
-}
-
-export default Grupos;
+};

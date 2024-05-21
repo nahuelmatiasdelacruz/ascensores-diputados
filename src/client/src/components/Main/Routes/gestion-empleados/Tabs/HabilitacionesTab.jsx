@@ -119,7 +119,6 @@ const HabilitacionesTab = ({updateData,userData}) => {
         }},
     ]
     const editarHabilitacion = (e,data)=>{
-        console.log(data);
         setNuevaHabilitacion({
             habilitacion_id: data.habilitacion_id,
             tipo: {
@@ -267,7 +266,6 @@ const HabilitacionesTab = ({updateData,userData}) => {
                     fechaDesde: nuevaHabilitacion.fechaDesde,
                     fechaHasta: nuevaHabilitacion.fechaHasta
                 }
-                console.log(nuevosDatos);
                 await axios.put(`${server}/api/habilitaciones`,nuevosDatos);
             }catch(e){
                 toast.error(`Hubo un error al actualizar la habilitación: \n${e.message}`);
