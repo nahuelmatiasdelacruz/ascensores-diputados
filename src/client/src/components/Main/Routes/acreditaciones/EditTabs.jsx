@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import UserPhoto from '../../../../img/no-profile2.png';
+import UserPhoto from '../../../../img/no-profile2.webp';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import {AcreditacionTab,HabilitacionesTab,DocumentacionesTab,BienesTab,AscensoresTab,AccesosTab,EventosTab} from './Tabs';

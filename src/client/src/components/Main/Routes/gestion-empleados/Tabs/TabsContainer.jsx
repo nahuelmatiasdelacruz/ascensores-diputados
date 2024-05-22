@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import UserPhoto from '../../../../../img/nophoto.png';
+import UserPhoto from '../../../../../img/nophoto.webp';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';

@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileCard from './ProfileCard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import logoEmpresa from '../../../img/logoEmpresa.png';
+import logoEmpresa from '../../../img/logoEmpresa.webp';
 import './styles.css';
 import MenuList from './MenuList';
 import { useDispatch } from 'react-redux';

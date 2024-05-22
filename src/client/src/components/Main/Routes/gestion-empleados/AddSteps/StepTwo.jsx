@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
-import NoPhoto from '../../../../../img/nophoto.png';
+import NoPhoto from '../../../../../img/nophoto.webp';
 import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';

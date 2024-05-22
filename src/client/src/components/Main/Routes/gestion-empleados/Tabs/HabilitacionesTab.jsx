@@ -1,13 +1,13 @@
 /* Normal imports */
 import React, { useEffect, useState } from 'react';
-import loadingFinger from '../../../../../img/loadingFinger.gif';
+import loadingFinger from '../../../../../img/loadingFinger.webp';
 import toast, {Toaster} from 'react-hot-toast';
 import { stylesModal } from '../../../../../styles/customStyles';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { server } from '../../../../../helpers/constants';
 import axios from 'axios';
-import NoProfile from '../../../../../img/no-profile.jpg';
+import NoProfile from '../../../../../img/no-profile.webp';
 
 /* Material UI */
 import Box from '@mui/material/Box';

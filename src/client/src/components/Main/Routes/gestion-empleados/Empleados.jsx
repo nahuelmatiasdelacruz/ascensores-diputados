@@ -17,7 +17,7 @@ import { GridToolbarContainer,
 import { stylesModal } from '../../../../styles/customStyles';
 import TabsContainer from './Tabs/TabsContainer';
 import axios from 'axios';
-import loadingCircle from '../../../../img/loadingCircle.gif';
+import loadingCircle from '../../../../img/loadingCircle.webp';
 import { server } from '../../../../helpers/constants';
 import StepOne from './AddSteps/StepOne';
 import StepTwo from './AddSteps/StepTwo';

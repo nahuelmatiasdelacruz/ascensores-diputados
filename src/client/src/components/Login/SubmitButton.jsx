@@ -1,5 +1,5 @@
 import React from 'react';
-import loadingGif from '../../img/loadingCircle.gif';
+import loadingGif from '../../img/loadingCircle.webp';
 import { useSelector } from 'react-redux';
 
 export const SubmitButton = () => {

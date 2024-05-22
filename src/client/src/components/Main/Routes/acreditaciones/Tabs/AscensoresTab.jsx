@@ -6,7 +6,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import AddIcon from '@mui/icons-material/Add';
-import loadingFinger from '../../../../../img/loadingFinger.gif';
+import loadingFinger from '../../../../../img/loadingFinger.webp';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';

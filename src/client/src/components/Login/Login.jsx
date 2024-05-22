@@ -1,7 +1,7 @@
 import '../../styles/styles.css';
 import React from 'react';
-import logoEmpresa from '../../img/logoEmpresa.png';
-import loadingGif from '../../img/loadingGif.gif';
+import logoEmpresa from '../../img/logoEmpresa.webp';
+import loadingGif from '../../img/loadingGif.webp';
 import { Toaster } from 'react-hot-toast';
 import { useForm } from '../../hooks';
 import { useDispatch, useSelector } from 'react-redux';

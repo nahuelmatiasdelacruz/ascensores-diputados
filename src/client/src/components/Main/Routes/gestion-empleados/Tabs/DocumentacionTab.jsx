@@ -6,7 +6,7 @@ import { server } from '../../../../../helpers/constants';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import axios from 'axios';
-import UploadImage from '../../../../../img/uploadimg.jpg';
+import UploadImage from '../../../../../img/uploadimg.webp';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 /* Material UI */

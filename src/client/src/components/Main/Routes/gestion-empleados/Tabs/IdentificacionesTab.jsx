@@ -1,6 +1,6 @@
 /* Normal imports */
 import React, { useEffect, useState } from 'react';
-import loadingFinger from '../../../../../img/loadingFinger.gif';
+import loadingFinger from '../../../../../img/loadingFinger.webp';
 import toast, {Toaster} from 'react-hot-toast';
 import { stylesModal } from '../../../../../styles/customStyles';
 import { server } from '../../../../../helpers/constants';

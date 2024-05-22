@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import NoProfilePhoto from '../../../img/no-profile2.png';
+import NoProfilePhoto from '../../../img/no-profile2.webp';
 import {Tooltip,IconButton,HomeIcon} from '../../';
 import { useNavigate } from 'react-router-dom';
 

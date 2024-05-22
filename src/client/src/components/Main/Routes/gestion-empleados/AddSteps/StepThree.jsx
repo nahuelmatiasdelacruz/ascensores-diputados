@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NoPhoto from '../../../../../img/nophoto.png';
+import NoPhoto from '../../../../../img/nophoto.webp';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';

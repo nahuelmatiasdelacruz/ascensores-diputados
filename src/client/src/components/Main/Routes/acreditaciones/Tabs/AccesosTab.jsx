@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import loadingFinger from '../../../../../img/loadingFinger.gif';
+import loadingFinger from '../../../../../img/loadingFinger.webp';
 import toast from 'react-hot-toast';
 import { stylesModal } from '../../../../../styles/customStyles';
 import { Switch, Stack, EditIcon, IconButton, DeleteIcon, FormControlLabel, Modal, Box, Button, LoadingButton, TextField, MenuItem, DataGrid, esES, AddIcon } from '../../../../';
